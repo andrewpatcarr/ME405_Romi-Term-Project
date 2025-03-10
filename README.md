@@ -1,5 +1,6 @@
 # ME405_Romi-Term-Project
 ### By: Andrew Carr and Alain Kanadjian
+### Instructor: Charlie Refvem
 
 ---
 
