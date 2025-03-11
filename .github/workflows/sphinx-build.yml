@@ -25,7 +25,7 @@ jobs:
 
       - name: Build Sphinx documentation
         run: |
-          sphinx-build -E -a -b html docs/ _build/html
+          sphinx-build -E -a -b html docs/ _build
           
       - name: Remove old docs and copy new build
         run: |
@@ -36,5 +36,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: docs/_build/html  # adjust if your build output is elsewhere
+          folder: docs/_build  # adjust if your build output is elsewhere
 
