@@ -1,7 +1,0 @@
-Assembly
-========
-
-Pinout
-------
-
-<add image>
