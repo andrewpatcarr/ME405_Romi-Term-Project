@@ -6,11 +6,17 @@ class QTRSensor:
     A class to handle QTR Reflectance Array Sensors.
 
     Attributes
-        pins (list): pin numbers for each IR LED and the control pin.
-        control (Pin): Pin object for the control pin.
-        white (list): calibration readings for white background.
-        black (list): calibration readings for black background.
+    ----------
+        pins : list
+            pin values for each IR LED and the control pin.
+        control : Pin
+            Pin object for the control pin.
+        white : list
+            calibration readings for white background.
+        black : list
+            calibration readings for black background.
     Methods
+    -------
 
     """
     def __init__(self, pins,ctrl):

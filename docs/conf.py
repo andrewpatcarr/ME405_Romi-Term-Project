@@ -38,14 +38,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'  # make it furo?
+html_theme = 'furo'  # make it furo?
 html_static_path = ['_static']
-
+html_title = "ME-405 Term Project"
 
 sys.path.insert(0, os.path.abspath("../code"))  # Adjust path to 'code' folder
 
-# if 'sphinx' in sys.modules:
-#     sys.modules['pyb'] = MagicMock()
-#     pyb = sys.modules['pyb']
-#     pyb.Pin = MagicMock()
-#     pyb.I2C = MagicMock()

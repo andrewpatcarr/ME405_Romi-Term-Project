@@ -2,41 +2,41 @@ from encoder import Encoder
 
 class EncoderTask:
     """
-    A class to handle reading the encoder.
+    A class to handle reading the encoder and updating shared variables.
 
     Attributes
-        right_enc_A (int): The pin for channel A for the right wheel encoder.
-
-        right_enc_B (int): The pin for channel B for the right wheel encoder.
-
-        right_enc_timer (int): The channel timer number for the right wheel encoder.
-
-        left_enc_A (int): The pin for channel A for the left wheel encoder.
-
-        left_enc_B (int): The pin for channel B for the left wheel encoder.
-
-        left_enc_timer (int): The pin channel timer number for the left wheel encoder.
-
-        S0_init (int): Initialization state value.
-
-        S1_init (int): Read state value.
-
-        state (int): Current state value.
-
-        right_encoder (Encoder): Encoder class object for the right wheel encoder.
-
-        left_encoder (Encoder): Encoder class object for the left wheel encoder.
-
-    Methods
-        encoder_gen (shares: list) --> state:
-            Jumps between states to initialize and read encoder values.
+    ----------
+    right_enc_A : int
+        The pin for channel A for the right wheel encoder.
+    right_enc_B : int
+        The pin for channel B for the right wheel encoder.
+    right_enc_timer : int
+        The channel timer number for the right wheel encoder.
+    left_enc_A : int
+        The pin for channel A for the left wheel encoder.
+    left_enc_B : int
+        The pin for channel B for the left wheel encoder.
+    left_enc_timer : int
+        The channel timer number for the left wheel encoder.
+    S0_init : int
+        Initialization state value.
+    S1_init : int
+        Read state value.
+    state : int
+        Current state value.
+    right_encoder : Encoder
+        Encoder class object for the right wheel encoder.
+    left_encoder : Encoder
+        Encoder class object for the left wheel encoder.
     """
     def __init__(self, pins):
         """
         Initializes the EncoderTask object and creates Encoder classes for each encoder.
 
-        Args:
-            pins (list): The values for encoder channels and timers.
+        Parameters
+        ----------
+        pins : list
+            The values for encoder channels and timers.
         """
 
         right_enc_A = pins[0]
@@ -54,10 +54,20 @@ class EncoderTask:
         self.left_encoder = Encoder(left_enc_A, left_enc_B, left_enc_timer)
     def encoder_gen(self, shares):
         """
-        The function that implements the finite state machine for the Encoder task.
+        The generator that implements the finite state machine for the Encoder task.
 
-        Args:
-            shares (list): shared values for position and velocity for each wheel.
+        State 0 zeros the encoder and moves to state 1. State 1 updates the shares for the
+        motor position and velocity for each motor from the `Encoder` class that handles the Encoder.
+
+        Parameters
+        ----------
+        shares : list
+            Shared values for position and velocity for each wheel.
+
+        Yields
+        ------
+        state : int
+            The value of the current state within the machine
         """
         right_pos, right_vel, left_pos, left_vel, right_path, left_path = shares
         while True:
