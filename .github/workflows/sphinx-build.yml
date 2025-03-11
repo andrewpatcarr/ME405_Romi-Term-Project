@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Sphinx documentation
         run: |
-          sphinx-build -b html source docs
+          sphinx-build -E -a -b html docs docs/_build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
