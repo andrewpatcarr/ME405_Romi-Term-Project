@@ -10,7 +10,7 @@ that was worked on throughout this quarter.
 
 All documentation, theory and resources can be found here:
 
-{link to sphinx}
+(ME-405 Romi Term Project Documentation)[https://andrewpatcarr.github.io/ME405_Romi-Term-Project/]
 
 ### The Project
 
