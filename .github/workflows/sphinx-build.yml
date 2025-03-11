@@ -25,10 +25,8 @@ jobs:
 
       - name: Build Sphinx documentation
         run: |
-          sphinx-build -E -a -b html docs _site
-          rm -rf docs/*
-          cp -r _site/* docs/
-          touch docs/.nojekyll  # Ensure GitHub Pages processes files correctly
+          sphinx-build -E -a -b html docs ../gh_pages
+          
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
