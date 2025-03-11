@@ -30,7 +30,7 @@ jobs:
       - name: Remove old docs and copy new build
         run: |
           rm -rf docs/*
-          cp -r _build/html/* docs/
+          cp -r _build/* docs/
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
