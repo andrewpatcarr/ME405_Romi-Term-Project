@@ -36,5 +36,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: _build  # adjust if your build output is elsewhere
+          
 
