@@ -6,16 +6,25 @@ class EncoderTask:
 
     Attributes
         right_enc_A (int): The pin for channel A for the right wheel encoder.
+
         right_enc_B (int): The pin for channel B for the right wheel encoder.
+
         right_enc_timer (int): The channel timer number for the right wheel encoder.
+
         left_enc_A (int): The pin for channel A for the left wheel encoder.
+
         left_enc_B (int): The pin for channel B for the left wheel encoder.
+
         left_enc_timer (int): The pin channel timer number for the left wheel encoder.
+
         S0_init (int): Initialization state value.
+
         S1_init (int): Read state value.
+
         state (int): Current state value.
 
         right_encoder (Encoder): Encoder class object for the right wheel encoder.
+
         left_encoder (Encoder): Encoder class object for the left wheel encoder.
 
     Methods
@@ -50,7 +59,7 @@ class EncoderTask:
         Args:
             shares (list): shared values for position and velocity for each wheel.
         """
-        right_pos, right_vel, left_pos, left_vel = shares
+        right_pos, right_vel, left_pos, left_vel, right_path, left_path = shares
         while True:
             # print('in encoder task')
             if self.state == self.S0_init:
