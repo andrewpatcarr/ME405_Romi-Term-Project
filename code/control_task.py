@@ -62,10 +62,12 @@ class ControlTask:
         self.now = ticks_ms()
 
         # Base speed values for motors
-        self.left_base = 30
-        self.right_base = 25
+        self.base_speed = 30
+        self.speed = 0
         self.left_output = 0
         self.right_output = 0
+        self.stepper = 0
+        self.heading_set = 0
 
     def controller(self, shares):
         """
@@ -81,38 +83,44 @@ class ControlTask:
 
         Yields
         ------
-        int
+        state : int
             The current FSM state.
         """
-        error, right_speed, left_speed = shares
+        line_error, right_speed, left_speed, line_heading, heading = shares
         while True:
+            error_here = 0
             if self.state == self.S0_init:
-                # Transition to PID control state
                 self.state = self.S1_PID
                 yield self.state
 
             elif self.state == self.S1_PID:
-                # Read current error value
-                error_here = error.get()
-                
-                # Compute time difference since last update
+                line_heading_here = line_heading.get()
+                if line_heading_here == 0:
+                    error_here = line_error.get()
+                    self.speed = self.base_speed
+                elif line_heading_here == 1 or line_heading_here == -1:
+                    if line_heading_here == 1:
+                        self.speed = self.base_speed
+                    else:
+                        self.speed = -self.base_speed
+                        error_here = heading.get() - self.heading_set
+                elif line_heading_here == 2:  # maybe adjust
+                    self.right_output = -15
+                    self.left_output = 15
+                    yield self.state
+                elif line_heading_here == 3:
+                    yield self.state
                 self.now = ticks_ms()
                 self.del_time = ticks_diff(self.now, self.prev_time)
-                
-                # Compute integral term (accumulates over time)
+
                 self.integral += error_here * (self.del_time / 1000)
-                
-                # PID output calculation (Proportional + Integral)
+
                 output = int(self.k_p * error_here + self.k_i * self.integral)
-                
-                # Update previous values for next iteration
+
                 self.prev_error = error_here
                 self.prev_time = self.now
-                # Adjust motor speeds based on computed output
-                self.right_output = int(self.right_base - output)
-                self.left_output = int(self.left_base + output)
-                # Store new motor speed values in shared variables
-                right_speed.put(self.right_output)
-                left_speed.put(self.left_output)
-                
+
+                right_speed.put(int(self.speed - output))
+                left_speed.put(int(self.speed + output))
+
                 yield self.state

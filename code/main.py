@@ -1,4 +1,4 @@
-from pyb import Pin, Timer, millis, USB_VCP, UART, ADC, I2C, Switch
+from pyb import Pin, Timer, millis, USB_VCP, UART, ADC, I2C, Switch, ExtInt
 from time import ticks_us, ticks_diff, ticks_add, sleep, time, ticks_ms
 import math
 from motor import Motor
@@ -11,7 +11,6 @@ from qtr_sensor import QTRSensor, QTRTask
 from control_task import ControlTask
 from heading_task import HeadingTask
 from BNO055 import BNO055
-#from user_task import User
 
 
 right_pwm_pin = "B9"
@@ -41,15 +40,15 @@ ir_ctrl = 'B2'
 
 user_button_pin = 'C13'
 button = Pin(user_button_pin, Pin.IN, Pin.PULL_UP)
-sw = Switch()
+sw_1 = Switch()
 prev_button_state = False
 button_state = False
 def button_pushed():
-    global button_state  # Access the global led_state variable
-    button_state = not button_state  # Toggle the LED state
+    global button_state
+    button_state = not button_state
     sleep(.200)  # Debouncing delay
 
-sw.callback(button_pushed)
+sw_1.callback(button_pushed)
 
 def wait_for_button():
     global button_state, prev_button_state
@@ -57,6 +56,7 @@ def wait_for_button():
         if button_state != prev_button_state:
             prev_button_state = button_state
             break
+
 
 
 enc_pins = [right_enc_A, right_enc_B, right_enc_timer, left_enc_A, left_enc_B, left_enc_timer]
@@ -79,18 +79,36 @@ sleep(1)  # Allow devices to power up
 # else:
 #     print(f"Found I2C devices at addresses: {[hex(dev) for dev in devices]}")
 
+bumper_pin = Pin('B14', Pin.IN, Pin.PULL_UP)
+prev_bumper_state = False
+bumper_state = False
+last_interrupt_time = 0  # Stores the last trigger time
+debounce_delay = 50  # Debounce delay in milliseconds
 
+def bumper_pushed(line):
+    global bumper_state, last_interrupt_time
+    current_time = millis()  # Get current time in ms
+    if (current_time - last_interrupt_time) > debounce_delay:  # Check debounce
+        bumper_state = True
+        last_interrupt_time = current_time  # Update last trigger time
+
+bumper_inter = ExtInt(bumper_pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, bumper_pushed)
+#
+# while True:
+#     print(f'Bumper State: {bumper_state}')
+#     if bumper_state:
+#         print('Bumper Hit!')
+#         break
 
 
 encoder = EncoderTask(enc_pins)
-motor = MotorTask(motor_pins[0:4], motor_pins[4:8], 4, 1, [1, 0], [1.3, 0])
+motor = MotorTask(motor_pins[0:4], motor_pins[4:8], 4, 1, [.7, 0], [.7, 0])
 data_collecting = DataCollectionTask()
 qtr = QTRSensor(qtr_pins, ir_ctrl)
 qtr_more = QTRTask(qtr)
 control = ControlTask([20, 0, 0], 0)  # [k_p, k_i, K_d], offset
-#imu = BNO055(i2c, 'A15')
-#imu_more = HeadingTask(imu)
-#user_more = User(BT_ser)
+imu = BNO055(i2c, 'A15')
+imu_more = HeadingTask(imu)
 
 
 if __name__ == '__main__':
@@ -112,49 +130,163 @@ if __name__ == '__main__':
     times = task_share.Queue('h', 2000, name="Times")
     data_collect = task_share.Share('h', name="Data Collect?")
     rolling = task_share.Share('h', name="Rolling")
-    error = task_share.Share('f', name="Error")
-    heading_error = task_share.Share('f', name="Heading Error")
+    line_error = task_share.Share('f', name="Error")
+    heading = task_share.Share('f', name="Heading Error")
     user_input = task_share.Share('h', name="User Input")
-    right_path = task_share.Share('h', name="Right Path")
-    left_path = task_share.Share('h', name="Left Path")
-    line_switch = task_share.Share('h', name="Line Switch")
+    r_path = task_share.Share('h', name="Right Path")
+    l_path = task_share.Share('h', name="Left Path")
+    line_heading = task_share.Share('h', name="Line Switch")
 
 
     enc_task = cotask.Task(encoder.encoder_gen, name='Encoder Task', priority=1, period=1,
-                           shares=([right_pos, right_vel, left_pos, left_vel, right_path, left_path]), trace=False, profile=True)
+                           shares=([right_pos, right_vel, left_pos, left_vel]), trace=False, profile=True)
 
     motor_task = cotask.Task(motor.go, name='Motor Task', priority=1, period=8,
                            shares=([right_speed, left_speed, right_stop, left_stop, right_vel, left_vel]), trace=False, profile=True)
-    controller_task = cotask.Task(control.controller, name='Control Task', priority=1, period=8, shares=[error, right_speed, left_speed], trace=False, profile=True)
-    qtr_task = cotask.Task(qtr_more.get_line, name='QTR Task', priority=1, period=10, shares=error, trace=False, profile=True)
+    controller_task = cotask.Task(control.controller, name='Control Task', priority=1, period=8, shares=[line_error, right_speed, left_speed, line_heading, heading], trace=False, profile=True)
+    qtr_task = cotask.Task(qtr_more.get_line, name='QTR Task', priority=1, period=10, shares=line_error, trace=False, profile=True)
+    imu_task = cotask.Task(imu_more.get_heading, name='IMU Task', priority=1, period=15, shares=heading, trace=False, profile=True)
 
     cotask.task_list.append(enc_task)
     cotask.task_list.append(qtr_task)
     cotask.task_list.append(controller_task)
     cotask.task_list.append(motor_task)
+    cotask.task_list.append(imu_task)
     right_speed.put(0)
     right_stop.put(1)
     left_speed.put(0)
     left_stop.put(1)
 
+    print('place on white')
     wait_for_button()
+    qtr.calibrate_white()
 
-    qtr.calibrate()
-    interval = 1_000
+    print('place on black')
+    wait_for_button()
+    qtr.calibrate_black()
+
+    interval = 5000
     begin_time = ticks_ms()
     deadline = ticks_add(begin_time, interval)
-    wait_for_button()
+    right_stop.put(0)
+    left_stop.put(0)
+    state = 0
+    S0_wait_to_start = 0
+    S1_to_diamond = 1
+    S2_straightline_diamond = 2
+    S3_to_grid = 3
+    S4_to_turn = 4
+    S5_turn_1 = 5
+    S6_to_wall = 6
+    S7_reverse = 7
+    S8_turn_2 = 8
+    S9_to_3 = 9
+    S10_turn_3 = 10
+    S11_to_4 = 11
+    S12_turn_4 = 12
+    S13_to_finish = 13
+
+    d_location = 1000
+    end_d_location = 1500
+    grid_location = 5000
+    turn_1_location = 5000
+    wall_location = 10000
+    thresh = 0
+    rep = 0
+
+    print('Press button to start run')
+
     try:
-
-        right_stop.put(0)
-        left_stop.put(0)
         while True:
-            now = ticks_ms()
             cotask.task_list.pri_sched()
+            """Print Section"""
+            now = ticks_ms()
             if ticks_diff(deadline, now) < 0:
-
-                print(f'Error: {error.get()}')
+                print(f'Right_Pos: {right_pos.get()}, State: {state}, R_speed: {right_speed.get()}')
                 deadline = ticks_add(deadline, interval)
+
+            if state == S0_wait_to_start:
+                line_heading.put(3)
+                if button_state != prev_button_state:
+                    prev_button_state = button_state
+                    sleep(.2)
+                    state = S1_to_diamond
+                # maybe clear everything
+            elif button_state != prev_button_state:
+                prev_button_state = button_state
+                state = S0_wait_to_start
+
+            if state == S1_to_diamond:
+                line_heading.put(0)
+                if rep == 0:
+                    thresh = right_pos.get() + 5000
+                    heading_north = imu.read_heading()
+                    rep += 1
+
+                if right_pos.get() > thresh:
+                    state = S2_straightline_diamond
+                    rep = 0
+
+            if state == S2_straightline_diamond:
+                line_heading.put(3)
+                if rep == 0:
+                    thresh = right_pos.get() + 100
+                    rep += 1
+                if right_pos.get() > thresh:
+                    state = S3_to_grid
+                    rep = 0
+            if state == S3_to_grid:
+                line_heading.put(0)
+                if rep == 0:
+                    thresh = right_pos.get() + 14400000
+                    rep += 1
+                if right_pos.get() > thresh:
+                    state = S4_to_turn
+                    rep = 0
+            if state == S4_to_turn:
+                line_heading.put(1)
+                if rep == 0:
+                    thresh = right_pos.get() + 144000000
+                    rep += 1
+                if right_pos.get() > thresh:
+                    state = S5_turn_1
+                    rep == 0
+            if state == S5_turn_1:
+                if rep == 0:
+                    thresh = right_pos.get() - 144000000/4
+                    rep += 1
+                line_heading.put(2)
+                if right_pos.get() > thresh:
+                    right_speed.put(0)
+                    left_speed.put(0)
+                    state = S6_to_wall
+                    rep = 0
+            if state == S6_to_wall:
+                line_heading.put(0)
+                if bumper_state:
+                    right_speed.put(0)
+                    left_speed.put(0)
+                    state = S7_reverse
+            if state == S7_reverse:
+                line_heading.put(-1)
+                if rep == 0:
+                    thresh = right_pos.get() - 144000000/2
+                rep = 1
+                if right_pos.get() > thresh:
+                    right_speed.put(0)
+                    left_speed.put(0)
+                    state = S8_turn_2
+            if state == S8_turn_2:
+                thresh = right_pos.get() - 1440000000 / 4
+                line_heading.put(2)
+                if right_pos.get() > thresh:
+                    right_speed.put(0)
+                    left_speed.put(0)
+                    state = S9_to_3
+            if state == S9_to_3:
+                line_heading.put(1)
+
+
     except KeyboardInterrupt:
         print('done hopefully')
     right_speed.put(0)

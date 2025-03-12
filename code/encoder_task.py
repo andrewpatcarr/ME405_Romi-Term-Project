@@ -69,7 +69,7 @@ class EncoderTask:
         state : int
             The value of the current state within the machine
         """
-        right_pos, right_vel, left_pos, left_vel, right_path, left_path = shares
+        right_pos, right_vel, left_pos, left_vel = shares
         while True:
             # print('in encoder task')
             if self.state == self.S0_init:

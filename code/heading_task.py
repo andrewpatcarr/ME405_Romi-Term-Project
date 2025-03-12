@@ -4,32 +4,32 @@ import task_share
 
 class HeadingTask:
 
-    def __init__(self, imu, right_speed, left_speed, error, Kp=1.5):
+    def __init__(self, imu):
 
         self.imu = imu
-        self.right_speed = right_speed
-        self.left_speed = left_speed
-        self.error = error
-        self.Kp = Kp
-        self.target_heading = 0  # North
 
-    def adjust_heading(self):
+        self.S0_init = 0
+        self.S1_read = 1
+        self.state = self.S0_init
+        self.target_heading = 0
+
+
+    def get_heading(self, shares):
+
+        heading = shares
 
         while True:
-            current_heading = self.imu.read_heading()
-            heading_error = (self.target_heading - current_heading + 180) % 360 - 180  # Wraparound correction
-            self.error.put(heading_error)
+            if self.state == self.S0_init:
+                #print('in init')
+                self.imu.set_mode(0x0C)
+                self.state = self.S1_read
+                yield self.state
 
-            # Apply proportional control
-            turn_speed = int(self.Kp * heading_error)
-            turn_speed = max(min(turn_speed, 40), -40)  # Limit speed range
-
-            if abs(heading_error) > 2:  # Avoid unnecessary small adjustments
-                self.right_speed.put(-turn_speed)
-                self.left_speed.put(turn_speed)
-            else:
-                self.right_speed.put(0)
-                self.left_speed.put(0)
-
-            yield  # Allow cooperative multitasking
+            elif self.state == self.S1_read:
+                heading_here = self.imu.read_heading()
+                #heading_error_here = (self.target_heading - current_heading + 180) % 360 - 180  # Wraparound correction
+                #self.error.put(heading_error)
+                heading.put(heading_here)
+                #print(f'Heading Error: {heading_error_here}')
+                yield self.state
 

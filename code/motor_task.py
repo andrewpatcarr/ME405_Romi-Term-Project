@@ -61,7 +61,7 @@ class MotorTask:
 
             elif self.state == self.MOVE:
                 # Apply PID control to each motor
-                self.right_motor.pid(right_speed.get(), right_vel.get(), 30, 0)
-                self.left_motor.pid(left_speed.get(), left_vel.get(), 25, 0)
+                self.right_motor.pid(right_speed.get(), right_vel.get(), 0, 0)
+                self.left_motor.pid(left_speed.get(), left_vel.get(), 0, 0)
 
                 yield self.state

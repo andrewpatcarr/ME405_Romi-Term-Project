@@ -62,20 +62,23 @@ class QTRSensor:
 
     def centroid(self):
         return self.P
-    def calibrate(self):
+    def calibrate_white(self):
         """
         Calibrates IR sensor
         Sets white and black set-points for readings
         """
-        print('place on white')
-        sleep(3)
         self.white = self.readRaw()
-        print('place on black')
-        sleep(3)
+
+    def calibrate_black(self):
+        """
+        Calibrates IR sensor
+        Sets white and black set-points for readings
+        """
+
         self.black = self.readRaw()
         print(f'white: {self.white}')
         print(f'black: {self.black}')
-        sleep(3)
+
 
 class QTRTask:
     def __init__(self, qtr_array):
@@ -85,7 +88,7 @@ class QTRTask:
         self.state = self.S0_init
 
     def get_line(self, shares):
-        error = shares
+        line_error = shares
         while True:
             if self.state == self.S0_init:
                 self.state = self.S1_read
@@ -96,7 +99,7 @@ class QTRTask:
                 #print(f'Centroid: {centroid}')
                 # center should be 7, positive value means needs to turn right, vice versa
                 cent_error = centroid #- 7
-                error.put(cent_error)
+                line_error.put(cent_error)
                 #print(f'Cent Error: {cent_error}')
                 #print(f'Readings: {self.qtr_array.values}')
                 yield self.state
