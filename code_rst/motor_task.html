@@ -266,10 +266,83 @@
 <dt class="sig sig-object py" id="motor_task.MotorTask">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">motor_task.</span></span><span class="sig-name descname"><span class="pre">MotorTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">right_motor_pins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_motor_pins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_gains</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_gains</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#motor_task.MotorTask" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to control motor speed and movement using PID control.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor_task.MotorTask.right_motor">
+<span class="sig-name descname"><span class="pre">right_motor</span></span><a class="headerlink" href="#motor_task.MotorTask.right_motor" title="Link to this definition">¶</a></dt>
+<dd><p>Motor object for the right motor, controlled using PID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="motor.html#motor.Motor" title="motor.Motor">Motor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor_task.MotorTask.left_motor">
+<span class="sig-name descname"><span class="pre">left_motor</span></span><a class="headerlink" href="#motor_task.MotorTask.left_motor" title="Link to this definition">¶</a></dt>
+<dd><p>Motor object for the left motor, controlled using PID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="motor.html#motor.Motor" title="motor.Motor">Motor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor_task.MotorTask.STOP">
+<span class="sig-name descname"><span class="pre">STOP</span></span><a class="headerlink" href="#motor_task.MotorTask.STOP" title="Link to this definition">¶</a></dt>
+<dd><p>State representing a stopped motor (1).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor_task.MotorTask.MOVE">
+<span class="sig-name descname"><span class="pre">MOVE</span></span><a class="headerlink" href="#motor_task.MotorTask.MOVE" title="Link to this definition">¶</a></dt>
+<dd><p>State representing a moving motor (2).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor_task.MotorTask.state">
+<span class="sig-name descname"><span class="pre">state</span></span><a class="headerlink" href="#motor_task.MotorTask.state" title="Link to this definition">¶</a></dt>
+<dd><p>Current state of the motor task (STOP or MOVE).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor_task.MotorTask.current_speed">
+<span class="sig-name descname"><span class="pre">current_speed</span></span><a class="headerlink" href="#motor_task.MotorTask.current_speed" title="Link to this definition">¶</a></dt>
+<dd><p>Current speed setting for the motors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="motor_task.MotorTask.go">
 <span class="sig-name descname"><span class="pre">go</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shares</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#motor_task.MotorTask.go" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Controls motor speed and direction based on shared queue values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shares</strong> – A tuple containing queues for right/left motor speed, stopping states, and velocity feedback.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -332,6 +405,12 @@
             <ul>
 <li><a class="reference internal" href="#">motor_task</a><ul>
 <li><a class="reference internal" href="#motor_task.MotorTask"><code class="docutils literal notranslate"><span class="pre">MotorTask</span></code></a><ul>
+<li><a class="reference internal" href="#motor_task.MotorTask.right_motor"><code class="docutils literal notranslate"><span class="pre">MotorTask.right_motor</span></code></a></li>
+<li><a class="reference internal" href="#motor_task.MotorTask.left_motor"><code class="docutils literal notranslate"><span class="pre">MotorTask.left_motor</span></code></a></li>
+<li><a class="reference internal" href="#motor_task.MotorTask.STOP"><code class="docutils literal notranslate"><span class="pre">MotorTask.STOP</span></code></a></li>
+<li><a class="reference internal" href="#motor_task.MotorTask.MOVE"><code class="docutils literal notranslate"><span class="pre">MotorTask.MOVE</span></code></a></li>
+<li><a class="reference internal" href="#motor_task.MotorTask.state"><code class="docutils literal notranslate"><span class="pre">MotorTask.state</span></code></a></li>
+<li><a class="reference internal" href="#motor_task.MotorTask.current_speed"><code class="docutils literal notranslate"><span class="pre">MotorTask.current_speed</span></code></a></li>
 <li><a class="reference internal" href="#motor_task.MotorTask.go"><code class="docutils literal notranslate"><span class="pre">MotorTask.go()</span></code></a></li>
 </ul>
 </li>

@@ -266,10 +266,165 @@
 <dt class="sig sig-object py" id="control_task.ControlTask">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">control_task.</span></span><span class="sig-name descname"><span class="pre">ControlTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gains</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#control_task.ControlTask" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to implement a PID controller for motor speed adjustments.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.k_p">
+<span class="sig-name descname"><span class="pre">k_p</span></span><a class="headerlink" href="#control_task.ControlTask.k_p" title="Link to this definition">¶</a></dt>
+<dd><p>Proportional gain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.k_i">
+<span class="sig-name descname"><span class="pre">k_i</span></span><a class="headerlink" href="#control_task.ControlTask.k_i" title="Link to this definition">¶</a></dt>
+<dd><p>Integral gain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.k_d">
+<span class="sig-name descname"><span class="pre">k_d</span></span><a class="headerlink" href="#control_task.ControlTask.k_d" title="Link to this definition">¶</a></dt>
+<dd><p>Derivative gain (not used in this version).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#control_task.ControlTask.offset" title="Link to this definition">¶</a></dt>
+<dd><p>Offset value for control adjustments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.integral">
+<span class="sig-name descname"><span class="pre">integral</span></span><a class="headerlink" href="#control_task.ControlTask.integral" title="Link to this definition">¶</a></dt>
+<dd><p>Accumulated integral term for PID control.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.prev_error">
+<span class="sig-name descname"><span class="pre">prev_error</span></span><a class="headerlink" href="#control_task.ControlTask.prev_error" title="Link to this definition">¶</a></dt>
+<dd><p>Previous error value for integral calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.now">
+<span class="sig-name descname"><span class="pre">now</span></span><a class="headerlink" href="#control_task.ControlTask.now" title="Link to this definition">¶</a></dt>
+<dd><p>Current timestamp (milliseconds).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.prev_time">
+<span class="sig-name descname"><span class="pre">prev_time</span></span><a class="headerlink" href="#control_task.ControlTask.prev_time" title="Link to this definition">¶</a></dt>
+<dd><p>Previous timestamp (milliseconds).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.del_time">
+<span class="sig-name descname"><span class="pre">del_time</span></span><a class="headerlink" href="#control_task.ControlTask.del_time" title="Link to this definition">¶</a></dt>
+<dd><p>Time difference between control updates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.left_base">
+<span class="sig-name descname"><span class="pre">left_base</span></span><a class="headerlink" href="#control_task.ControlTask.left_base" title="Link to this definition">¶</a></dt>
+<dd><p>Base speed for left motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.right_base">
+<span class="sig-name descname"><span class="pre">right_base</span></span><a class="headerlink" href="#control_task.ControlTask.right_base" title="Link to this definition">¶</a></dt>
+<dd><p>Base speed for right motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.left_output">
+<span class="sig-name descname"><span class="pre">left_output</span></span><a class="headerlink" href="#control_task.ControlTask.left_output" title="Link to this definition">¶</a></dt>
+<dd><p>Output speed for left motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_task.ControlTask.right_output">
+<span class="sig-name descname"><span class="pre">right_output</span></span><a class="headerlink" href="#control_task.ControlTask.right_output" title="Link to this definition">¶</a></dt>
+<dd><p>Output speed for right motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="control_task.ControlTask.controller">
 <span class="sig-name descname"><span class="pre">controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shares</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#control_task.ControlTask.controller" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Implements the PID control loop.</p>
+<p>State 0: Initializes the system and moves to PID state.
+State 1: Reads the error, applies PID corrections, and updates motor speeds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shares</strong> (<em>list</em><em>[</em><em>SharedVariable</em><em>]</em>) – Shared variables for error, right motor speed, and left motor speed.</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>int</em> – The current FSM state.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -332,6 +487,19 @@
             <ul>
 <li><a class="reference internal" href="#">control_task</a><ul>
 <li><a class="reference internal" href="#control_task.ControlTask"><code class="docutils literal notranslate"><span class="pre">ControlTask</span></code></a><ul>
+<li><a class="reference internal" href="#control_task.ControlTask.k_p"><code class="docutils literal notranslate"><span class="pre">ControlTask.k_p</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.k_i"><code class="docutils literal notranslate"><span class="pre">ControlTask.k_i</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.k_d"><code class="docutils literal notranslate"><span class="pre">ControlTask.k_d</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.offset"><code class="docutils literal notranslate"><span class="pre">ControlTask.offset</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.integral"><code class="docutils literal notranslate"><span class="pre">ControlTask.integral</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.prev_error"><code class="docutils literal notranslate"><span class="pre">ControlTask.prev_error</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.now"><code class="docutils literal notranslate"><span class="pre">ControlTask.now</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.prev_time"><code class="docutils literal notranslate"><span class="pre">ControlTask.prev_time</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.del_time"><code class="docutils literal notranslate"><span class="pre">ControlTask.del_time</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.left_base"><code class="docutils literal notranslate"><span class="pre">ControlTask.left_base</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.right_base"><code class="docutils literal notranslate"><span class="pre">ControlTask.right_base</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.left_output"><code class="docutils literal notranslate"><span class="pre">ControlTask.left_output</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.right_output"><code class="docutils literal notranslate"><span class="pre">ControlTask.right_output</span></code></a></li>
 <li><a class="reference internal" href="#control_task.ControlTask.controller"><code class="docutils literal notranslate"><span class="pre">ControlTask.controller()</span></code></a></li>
 </ul>
 </li>
