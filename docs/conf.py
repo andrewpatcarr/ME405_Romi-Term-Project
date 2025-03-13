@@ -41,6 +41,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = 'furo'  # make it furo?
 html_static_path = ['_static']
 html_title = "ME-405 Term Project"
+html_css_files = ['custom.css']
 
 sys.path.insert(0, os.path.abspath("../code"))  # Adjust path to 'code' folder
 

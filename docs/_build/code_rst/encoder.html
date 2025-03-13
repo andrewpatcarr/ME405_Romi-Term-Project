@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2a4669c7" />
     
     
 
@@ -266,35 +267,190 @@
 <dt class="sig sig-object py" id="encoder.Encoder">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encoder.</span></span><span class="sig-name descname"><span class="pre">Encoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enc_A_pin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enc_B_pin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enc_timer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#encoder.Encoder" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to interface with a quadrature encoder using timers.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.enc_A_pin">
+<span class="sig-name descname"><span class="pre">enc_A_pin</span></span><a class="headerlink" href="#encoder.Encoder.enc_A_pin" title="Link to this definition">¶</a></dt>
+<dd><p>Pin object for channel A of the encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pin</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.enc_B_pin">
+<span class="sig-name descname"><span class="pre">enc_B_pin</span></span><a class="headerlink" href="#encoder.Encoder.enc_B_pin" title="Link to this definition">¶</a></dt>
+<dd><p>Pin object for channel B of the encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pin</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.timer">
+<span class="sig-name descname"><span class="pre">timer</span></span><a class="headerlink" href="#encoder.Encoder.timer" title="Link to this definition">¶</a></dt>
+<dd><p>Timer object configured for encoder mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Timer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.encoder_pos">
+<span class="sig-name descname"><span class="pre">encoder_pos</span></span><a class="headerlink" href="#encoder.Encoder.encoder_pos" title="Link to this definition">¶</a></dt>
+<dd><p>Accumulated encoder position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.encoder_pos_last">
+<span class="sig-name descname"><span class="pre">encoder_pos_last</span></span><a class="headerlink" href="#encoder.Encoder.encoder_pos_last" title="Link to this definition">¶</a></dt>
+<dd><p>Previous encoder position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.encoder_angle">
+<span class="sig-name descname"><span class="pre">encoder_angle</span></span><a class="headerlink" href="#encoder.Encoder.encoder_angle" title="Link to this definition">¶</a></dt>
+<dd><p>Encoder angle in degrees or radians.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.encoder_velocity">
+<span class="sig-name descname"><span class="pre">encoder_velocity</span></span><a class="headerlink" href="#encoder.Encoder.encoder_velocity" title="Link to this definition">¶</a></dt>
+<dd><p>Encoder velocity in counts per second.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.start_time">
+<span class="sig-name descname"><span class="pre">start_time</span></span><a class="headerlink" href="#encoder.Encoder.start_time" title="Link to this definition">¶</a></dt>
+<dd><p>Timestamp of the last update.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.last_time">
+<span class="sig-name descname"><span class="pre">last_time</span></span><a class="headerlink" href="#encoder.Encoder.last_time" title="Link to this definition">¶</a></dt>
+<dd><p>Timestamp of the previous update.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.del_time">
+<span class="sig-name descname"><span class="pre">del_time</span></span><a class="headerlink" href="#encoder.Encoder.del_time" title="Link to this definition">¶</a></dt>
+<dd><p>Time difference between updates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.current_count">
+<span class="sig-name descname"><span class="pre">current_count</span></span><a class="headerlink" href="#encoder.Encoder.current_count" title="Link to this definition">¶</a></dt>
+<dd><p>Current raw timer count.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.delta">
+<span class="sig-name descname"><span class="pre">delta</span></span><a class="headerlink" href="#encoder.Encoder.delta" title="Link to this definition">¶</a></dt>
+<dd><p>Difference in encoder counts since last update.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encoder.Encoder.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#encoder.Encoder.offset" title="Link to this definition">¶</a></dt>
+<dd><p>Offset to correct encoder count.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="encoder.Encoder.get_angle">
 <span class="sig-name descname"><span class="pre">get_angle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encoder.Encoder.get_angle" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the current encoder angle.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="encoder.Encoder.get_position">
 <span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encoder.Encoder.get_position" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the current encoder position.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="encoder.Encoder.get_velocity">
 <span class="sig-name descname"><span class="pre">get_velocity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encoder.Encoder.get_velocity" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the current encoder velocity.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="encoder.Encoder.print_enc">
 <span class="sig-name descname"><span class="pre">print_enc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encoder.Encoder.print_enc" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Prints the current encoder position.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="encoder.Encoder.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cb_src</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#encoder.Encoder.update" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Updates the encoder position and velocity based on timer counts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cb_src</strong> (<em>optional</em>) – Callback source, not used in this implementation.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="encoder.Encoder.zero">
 <span class="sig-name descname"><span class="pre">zero</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encoder.Encoder.zero" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Resets the encoder position to zero.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -357,6 +513,19 @@
             <ul>
 <li><a class="reference internal" href="#">encoder</a><ul>
 <li><a class="reference internal" href="#encoder.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a><ul>
+<li><a class="reference internal" href="#encoder.Encoder.enc_A_pin"><code class="docutils literal notranslate"><span class="pre">Encoder.enc_A_pin</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.enc_B_pin"><code class="docutils literal notranslate"><span class="pre">Encoder.enc_B_pin</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.timer"><code class="docutils literal notranslate"><span class="pre">Encoder.timer</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.encoder_pos"><code class="docutils literal notranslate"><span class="pre">Encoder.encoder_pos</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.encoder_pos_last"><code class="docutils literal notranslate"><span class="pre">Encoder.encoder_pos_last</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.encoder_angle"><code class="docutils literal notranslate"><span class="pre">Encoder.encoder_angle</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.encoder_velocity"><code class="docutils literal notranslate"><span class="pre">Encoder.encoder_velocity</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.start_time"><code class="docutils literal notranslate"><span class="pre">Encoder.start_time</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.last_time"><code class="docutils literal notranslate"><span class="pre">Encoder.last_time</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.del_time"><code class="docutils literal notranslate"><span class="pre">Encoder.del_time</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.current_count"><code class="docutils literal notranslate"><span class="pre">Encoder.current_count</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.delta"><code class="docutils literal notranslate"><span class="pre">Encoder.delta</span></code></a></li>
+<li><a class="reference internal" href="#encoder.Encoder.offset"><code class="docutils literal notranslate"><span class="pre">Encoder.offset</span></code></a></li>
 <li><a class="reference internal" href="#encoder.Encoder.get_angle"><code class="docutils literal notranslate"><span class="pre">Encoder.get_angle()</span></code></a></li>
 <li><a class="reference internal" href="#encoder.Encoder.get_position"><code class="docutils literal notranslate"><span class="pre">Encoder.get_position()</span></code></a></li>
 <li><a class="reference internal" href="#encoder.Encoder.get_velocity"><code class="docutils literal notranslate"><span class="pre">Encoder.get_velocity()</span></code></a></li>

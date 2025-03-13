@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2a4669c7" />
     
     
 
@@ -266,35 +267,194 @@
 <dt class="sig sig-object py" id="motor.Motor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">motor.</span></span><span class="sig-name descname"><span class="pre">Motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pwm_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gains</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#motor.Motor" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to control a DC motor using PWM and direction signals.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.pwm_pin">
+<span class="sig-name descname"><span class="pre">pwm_pin</span></span><a class="headerlink" href="#motor.Motor.pwm_pin" title="Link to this definition">¶</a></dt>
+<dd><p>Pin object for the PWM signal controlling motor speed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pin</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.dir_pin">
+<span class="sig-name descname"><span class="pre">dir_pin</span></span><a class="headerlink" href="#motor.Motor.dir_pin" title="Link to this definition">¶</a></dt>
+<dd><p>Pin object for setting the motor direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pin</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.slp_pin">
+<span class="sig-name descname"><span class="pre">slp_pin</span></span><a class="headerlink" href="#motor.Motor.slp_pin" title="Link to this definition">¶</a></dt>
+<dd><p>Pin object for enabling or disabling the motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pin</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.pwm_timer">
+<span class="sig-name descname"><span class="pre">pwm_timer</span></span><a class="headerlink" href="#motor.Motor.pwm_timer" title="Link to this definition">¶</a></dt>
+<dd><p>Timer object configured for PWM signal generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Timer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.pwm_channel">
+<span class="sig-name descname"><span class="pre">pwm_channel</span></span><a class="headerlink" href="#motor.Motor.pwm_channel" title="Link to this definition">¶</a></dt>
+<dd><p>Timer channel used for generating the PWM signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Timer.channel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.kp">
+<span class="sig-name descname"><span class="pre">kp</span></span><a class="headerlink" href="#motor.Motor.kp" title="Link to this definition">¶</a></dt>
+<dd><p>Proportional gain for the PID controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.ki">
+<span class="sig-name descname"><span class="pre">ki</span></span><a class="headerlink" href="#motor.Motor.ki" title="Link to this definition">¶</a></dt>
+<dd><p>Integral gain for the PID controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.integral">
+<span class="sig-name descname"><span class="pre">integral</span></span><a class="headerlink" href="#motor.Motor.integral" title="Link to this definition">¶</a></dt>
+<dd><p>Integral term accumulation for the PID controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.prev_time">
+<span class="sig-name descname"><span class="pre">prev_time</span></span><a class="headerlink" href="#motor.Motor.prev_time" title="Link to this definition">¶</a></dt>
+<dd><p>Timestamp of the previous PID update.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.del_time">
+<span class="sig-name descname"><span class="pre">del_time</span></span><a class="headerlink" href="#motor.Motor.del_time" title="Link to this definition">¶</a></dt>
+<dd><p>Time difference between PID updates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.now">
+<span class="sig-name descname"><span class="pre">now</span></span><a class="headerlink" href="#motor.Motor.now" title="Link to this definition">¶</a></dt>
+<dd><p>Current timestamp for PID calculations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="motor.Motor.prev_error">
+<span class="sig-name descname"><span class="pre">prev_error</span></span><a class="headerlink" href="#motor.Motor.prev_error" title="Link to this definition">¶</a></dt>
+<dd><p>Previous error value used in the PID controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="motor.Motor.disable">
 <span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motor.Motor.disable" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Disables the motor by setting the sleep pin low.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="motor.Motor.enable">
 <span class="sig-name descname"><span class="pre">enable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motor.Motor.enable" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Enables the motor by setting sleep pin high while keeping PWM at 0.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="motor.Motor.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">speed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#motor.Motor.forward" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Moves the motor forward at a specified speed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>speed</strong> (<em>int</em>) – Speed percentage (0-100) to apply to the motor.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="motor.Motor.pid">
 <span class="sig-name descname"><span class="pre">pid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">des</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#motor.Motor.pid" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Implements a PID controller to adjust motor speed based on error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>des</strong> (<em>float</em>) – Desired position or velocity.</p></li>
+<li><p><strong>act</strong> (<em>float</em>) – Actual measured position or velocity.</p></li>
+<li><p><strong>vel</strong> (<em>int</em>) – Base velocity adjustment value.</p></li>
+<li><p><strong>mode</strong> (<em>int</em>) – Control mode (0 for standard PID control, 1 for inverse correction).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="motor.Motor.reverse">
 <span class="sig-name descname"><span class="pre">reverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">speed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#motor.Motor.reverse" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Moves the motor in reverse at a specified speed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>speed</strong> (<em>int</em>) – Speed percentage (0-100) to apply to the motor.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="motor.Motor.stop">
 <span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motor.Motor.stop" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Stops the motor by setting PWM to 0 while keeping it enabled.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -357,6 +517,18 @@
             <ul>
 <li><a class="reference internal" href="#">motor</a><ul>
 <li><a class="reference internal" href="#motor.Motor"><code class="docutils literal notranslate"><span class="pre">Motor</span></code></a><ul>
+<li><a class="reference internal" href="#motor.Motor.pwm_pin"><code class="docutils literal notranslate"><span class="pre">Motor.pwm_pin</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.dir_pin"><code class="docutils literal notranslate"><span class="pre">Motor.dir_pin</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.slp_pin"><code class="docutils literal notranslate"><span class="pre">Motor.slp_pin</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.pwm_timer"><code class="docutils literal notranslate"><span class="pre">Motor.pwm_timer</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.pwm_channel"><code class="docutils literal notranslate"><span class="pre">Motor.pwm_channel</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.kp"><code class="docutils literal notranslate"><span class="pre">Motor.kp</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.ki"><code class="docutils literal notranslate"><span class="pre">Motor.ki</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.integral"><code class="docutils literal notranslate"><span class="pre">Motor.integral</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.prev_time"><code class="docutils literal notranslate"><span class="pre">Motor.prev_time</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.del_time"><code class="docutils literal notranslate"><span class="pre">Motor.del_time</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.now"><code class="docutils literal notranslate"><span class="pre">Motor.now</span></code></a></li>
+<li><a class="reference internal" href="#motor.Motor.prev_error"><code class="docutils literal notranslate"><span class="pre">Motor.prev_error</span></code></a></li>
 <li><a class="reference internal" href="#motor.Motor.disable"><code class="docutils literal notranslate"><span class="pre">Motor.disable()</span></code></a></li>
 <li><a class="reference internal" href="#motor.Motor.enable"><code class="docutils literal notranslate"><span class="pre">Motor.enable()</span></code></a></li>
 <li><a class="reference internal" href="#motor.Motor.forward"><code class="docutils literal notranslate"><span class="pre">Motor.forward()</span></code></a></li>

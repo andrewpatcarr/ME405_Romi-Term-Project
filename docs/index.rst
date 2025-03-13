@@ -3,13 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-ME-405 Romi Term Project
-========================
-Documentation
-=============
+ME-405 Term Project Documentation
+=================================
+**By: Andrew Carr and Alain Kanadjian**
 
-The Project
------------
+**Instructor: Charlie Refvem**
+
+
+The Project - Romi
+------------------
 
 Throughout our quarter in ME-405, we worked on labs that used our mini-car robot, Romi, in different ways.
 We parameterized our motors, implemented task-based non-blocking programming, implemented an IR line sensor,

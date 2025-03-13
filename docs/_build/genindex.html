@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=2a4669c7" />
     
     
 
@@ -255,18 +256,16 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#Z"><strong>Z</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#Z"><strong>Z</strong></a></div>
 </section>
 <section id="A" class="genindex-section">
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="code_rst/heading_task.html#heading_task.HeadingTask.adjust_heading">adjust_heading() (heading_task.HeadingTask method)</a>
+        <li><a href="code_rst/task_share.html#task_share.Queue.any">any() (task_share.Queue method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="code_rst/task_share.html#task_share.Queue.any">any() (task_share.Queue method)</a>
-</li>
         <li><a href="code_rst/cotask.html#cotask.TaskList.append">append() (cotask.TaskList method)</a>
 </li>
     </ul></td>
@@ -292,6 +291,8 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/BNO055.html#BNO055.BNO055">BNO055 (class in BNO055)</a>
 </li>
+        <li><a href="code_rst/main.html#main.bumper_pushed">bumper_pushed() (in module main)</a>
+</li>
         <li><a href="code_rst/main.html#main.button_pushed">button_pushed() (in module main)</a>
 </li>
     </ul></td>
@@ -306,7 +307,9 @@
 </li>
         <li><a href="code_rst/BNO055.html#BNO055.BNO055.CALIB_STAT_REG">CALIB_STAT_REG (BNO055.BNO055 attribute)</a>
 </li>
-        <li><a href="code_rst/qtr_sensor.html#qtr_sensor.QTRSensor.calibrate">calibrate() (qtr_sensor.QTRSensor method)</a>
+        <li><a href="code_rst/qtr_sensor.html#qtr_sensor.QTRSensor.calibrate_black">calibrate_black() (qtr_sensor.QTRSensor method)</a>
+</li>
+        <li><a href="code_rst/qtr_sensor.html#qtr_sensor.QTRSensor.calibrate_white">calibrate_white() (qtr_sensor.QTRSensor method)</a>
 </li>
         <li><a href="code_rst/qtr_sensor.html#qtr_sensor.QTRSensor.centroid">centroid() (qtr_sensor.QTRSensor method)</a>
 </li>
@@ -338,6 +341,10 @@
           <li><a href="code_rst/cotask.html#module-cotask">module</a>
 </li>
         </ul></li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.current_count">current_count (encoder.Encoder attribute)</a>
+</li>
+        <li><a href="code_rst/motor_task.html#motor_task.MotorTask.current_speed">current_speed (motor_task.MotorTask attribute)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -353,9 +360,21 @@
           <li><a href="code_rst/data_collection_task.html#module-data_collection_task">module</a>
 </li>
         </ul></li>
+        <li><a href="code_rst/data_collection_task.html#data_collection_task.DataCollectionTask">DataCollectionTask (class in data_collection_task)</a>
+</li>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.del_time">del_time (control_task.ControlTask attribute)</a>
+
+        <ul>
+          <li><a href="code_rst/encoder.html#encoder.Encoder.del_time">(encoder.Encoder attribute)</a>
+</li>
+          <li><a href="code_rst/motor.html#motor.Motor.del_time">(motor.Motor attribute)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="code_rst/data_collection_task.html#data_collection_task.DataCollectionTask">DataCollectionTask (class in data_collection_task)</a>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.delta">delta (encoder.Encoder attribute)</a>
+</li>
+        <li><a href="code_rst/motor.html#motor.Motor.dir_pin">dir_pin (motor.Motor attribute)</a>
 </li>
         <li><a href="code_rst/motor.html#motor.Motor.disable">disable() (motor.Motor method)</a>
 </li>
@@ -371,6 +390,10 @@
 </li>
         <li><a href="code_rst/motor.html#motor.Motor.enable">enable() (motor.Motor method)</a>
 </li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.enc_A_pin">enc_A_pin (encoder.Encoder attribute)</a>
+</li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.enc_B_pin">enc_B_pin (encoder.Encoder attribute)</a>
+</li>
         <li>
     encoder
 
@@ -380,9 +403,15 @@
         </ul></li>
         <li><a href="code_rst/encoder.html#encoder.Encoder">Encoder (class in encoder)</a>
 </li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.encoder_angle">encoder_angle (encoder.Encoder attribute)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.encoder_gen">encoder_gen() (encoder_task.EncoderTask method)</a>
+</li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.encoder_pos">encoder_pos (encoder.Encoder attribute)</a>
+</li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.encoder_pos_last">encoder_pos_last (encoder.Encoder attribute)</a>
 </li>
         <li>
     encoder_task
@@ -391,6 +420,8 @@
           <li><a href="code_rst/encoder_task.html#module-encoder_task">module</a>
 </li>
         </ul></li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.encoder_velocity">encoder_velocity (encoder.Encoder attribute)</a>
+</li>
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask">EncoderTask (class in encoder_task)</a>
 </li>
         <li><a href="code_rst/BNO055.html#BNO055.BNO055.EULER_H_LSB_REG">EULER_H_LSB_REG (BNO055.BNO055 attribute)</a>
@@ -426,6 +457,8 @@
         <li><a href="code_rst/encoder.html#encoder.Encoder.get_angle">get_angle() (encoder.Encoder method)</a>
 </li>
         <li><a href="code_rst/BNO055.html#BNO055.BNO055.get_calibration_status">get_calibration_status() (BNO055.BNO055 method)</a>
+</li>
+        <li><a href="code_rst/heading_task.html#heading_task.HeadingTask.get_heading">get_heading() (heading_task.HeadingTask method)</a>
 </li>
         <li><a href="code_rst/qtr_sensor.html#qtr_sensor.QTRTask.get_line">get_line() (qtr_sensor.QTRTask method)</a>
 </li>
@@ -475,6 +508,34 @@
         <li><a href="code_rst/BNO055.html#BNO055.BNO055.I2C_ADDR">I2C_ADDR (BNO055.BNO055 attribute)</a>
 </li>
     </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.integral">integral (control_task.ControlTask attribute)</a>
+
+        <ul>
+          <li><a href="code_rst/motor.html#motor.Motor.integral">(motor.Motor attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.k_d">k_d (control_task.ControlTask attribute)</a>
+</li>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.k_i">k_i (control_task.ControlTask attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.k_p">k_p (control_task.ControlTask attribute)</a>
+</li>
+        <li><a href="code_rst/motor.html#motor.Motor.ki">ki (motor.Motor attribute)</a>
+</li>
+        <li><a href="code_rst/motor.html#motor.Motor.kp">kp (motor.Motor attribute)</a>
+</li>
+    </ul></td>
   </tr></table>
 </section>
 
@@ -482,6 +543,10 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.last_time">last_time (encoder.Encoder attribute)</a>
+</li>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.left_base">left_base (control_task.ControlTask attribute)</a>
+</li>
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.left_enc_A">left_enc_A (encoder_task.EncoderTask attribute)</a>
 </li>
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.left_enc_B">left_enc_B (encoder_task.EncoderTask attribute)</a>
@@ -491,6 +556,10 @@
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.left_enc_timer">left_enc_timer (encoder_task.EncoderTask attribute)</a>
 </li>
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.left_encoder">left_encoder (encoder_task.EncoderTask attribute)</a>
+</li>
+        <li><a href="code_rst/motor_task.html#motor_task.MotorTask.left_motor">left_motor (motor_task.MotorTask attribute)</a>
+</li>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.left_output">left_output (control_task.ControlTask attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -560,6 +629,8 @@
         </ul></li>
         <li><a href="code_rst/motor_task.html#motor_task.MotorTask">MotorTask (class in motor_task)</a>
 </li>
+        <li><a href="code_rst/motor_task.html#motor_task.MotorTask.MOVE">MOVE (motor_task.MotorTask attribute)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -570,6 +641,12 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/BNO055.html#BNO055.BNO055.NDOF_MODE">NDOF_MODE (BNO055.BNO055 attribute)</a>
 </li>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.now">now (control_task.ControlTask attribute)</a>
+
+        <ul>
+          <li><a href="code_rst/motor.html#motor.Motor.now">(motor.Motor attribute)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/task_share.html#task_share.Queue.num_in">num_in() (task_share.Queue method)</a>
@@ -581,6 +658,14 @@
 <section id="O" class="genindex-section">
   <h2>O</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.offset">offset (control_task.ControlTask attribute)</a>
+
+        <ul>
+          <li><a href="code_rst/encoder.html#encoder.Encoder.offset">(encoder.Encoder attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/BNO055.html#BNO055.BNO055.OPR_MODE_REG">OPR_MODE_REG (BNO055.BNO055 attribute)</a>
 </li>
@@ -596,10 +681,22 @@
 </li>
         <li><a href="code_rst/qtr_sensor.html#qtr_sensor.QTRSensor.pins">pins (qtr_sensor.QTRSensor attribute)</a>
 </li>
-        <li><a href="code_rst/cotask.html#cotask.TaskList.pri_sched">pri_sched() (cotask.TaskList method)</a>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.prev_error">prev_error (control_task.ControlTask attribute)</a>
+
+        <ul>
+          <li><a href="code_rst/motor.html#motor.Motor.prev_error">(motor.Motor attribute)</a>
 </li>
+        </ul></li>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.prev_time">prev_time (control_task.ControlTask attribute)</a>
+
+        <ul>
+          <li><a href="code_rst/motor.html#motor.Motor.prev_time">(motor.Motor attribute)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="code_rst/cotask.html#cotask.TaskList.pri_sched">pri_sched() (cotask.TaskList method)</a>
+</li>
         <li><a href="code_rst/encoder.html#encoder.Encoder.print_enc">print_enc() (encoder.Encoder method)</a>
 </li>
         <li><a href="code_rst/task_share.html#task_share.Queue.put">put() (task_share.Queue method)</a>
@@ -608,6 +705,12 @@
           <li><a href="code_rst/task_share.html#task_share.Share.put">(task_share.Share method)</a>
 </li>
         </ul></li>
+        <li><a href="code_rst/motor.html#motor.Motor.pwm_channel">pwm_channel (motor.Motor attribute)</a>
+</li>
+        <li><a href="code_rst/motor.html#motor.Motor.pwm_pin">pwm_pin (motor.Motor attribute)</a>
+</li>
+        <li><a href="code_rst/motor.html#motor.Motor.pwm_timer">pwm_timer (motor.Motor attribute)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -653,13 +756,15 @@
 </li>
         <li><a href="code_rst/cotask.html#cotask.Task.ready">ready() (cotask.Task method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/BNO055.html#BNO055.BNO055.reset">reset() (BNO055.BNO055 method)</a>
 </li>
         <li><a href="code_rst/cotask.html#cotask.Task.reset_profile">reset_profile() (cotask.Task method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/motor.html#motor.Motor.reverse">reverse() (motor.Motor method)</a>
+</li>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.right_base">right_base (control_task.ControlTask attribute)</a>
 </li>
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.right_enc_A">right_enc_A (encoder_task.EncoderTask attribute)</a>
 </li>
@@ -668,6 +773,10 @@
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.right_enc_timer">right_enc_timer (encoder_task.EncoderTask attribute)</a>
 </li>
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.right_encoder">right_encoder (encoder_task.EncoderTask attribute)</a>
+</li>
+        <li><a href="code_rst/motor_task.html#motor_task.MotorTask.right_motor">right_motor (motor_task.MotorTask attribute)</a>
+</li>
+        <li><a href="code_rst/control_task.html#control_task.ControlTask.right_output">right_output (control_task.ControlTask attribute)</a>
 </li>
         <li><a href="code_rst/cotask.html#cotask.TaskList.rr_sched">rr_sched() (cotask.TaskList method)</a>
 </li>
@@ -691,17 +800,27 @@
           <li><a href="code_rst/task_share.html#task_share.Share.ser_num">(task_share.Share attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/BNO055.html#BNO055.BNO055.set_mode">set_mode() (BNO055.BNO055 method)</a>
 </li>
         <li><a href="code_rst/cotask.html#cotask.Task.set_period">set_period() (cotask.Task method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/task_share.html#task_share.Share">Share (class in task_share)</a>
 </li>
         <li><a href="code_rst/task_share.html#task_share.show_all">show_all() (in module task_share)</a>
 </li>
+        <li><a href="code_rst/motor.html#motor.Motor.slp_pin">slp_pin (motor.Motor attribute)</a>
+</li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.start_time">start_time (encoder.Encoder attribute)</a>
+</li>
         <li><a href="code_rst/encoder_task.html#encoder_task.EncoderTask.state">state (encoder_task.EncoderTask attribute)</a>
+
+        <ul>
+          <li><a href="code_rst/motor_task.html#motor_task.MotorTask.state">(motor_task.MotorTask attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="code_rst/motor_task.html#motor_task.MotorTask.STOP">STOP (motor_task.MotorTask attribute)</a>
 </li>
         <li><a href="code_rst/motor.html#motor.Motor.stop">stop() (motor.Motor method)</a>
 </li>
@@ -725,6 +844,8 @@
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="code_rst/cotask.html#cotask.TaskList">TaskList (class in cotask)</a>
+</li>
+        <li><a href="code_rst/encoder.html#encoder.Encoder.timer">timer (encoder.Encoder attribute)</a>
 </li>
     </ul></td>
   </tr></table>
