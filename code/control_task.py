@@ -62,7 +62,7 @@ class ControlTask:
         self.now = ticks_ms()
 
         # Base speed values for motors
-        self.base_speed = 30
+        self.base_speed = 35
         self.speed = 0
         self.left_output = 0
         self.right_output = 0
@@ -86,7 +86,7 @@ class ControlTask:
         state : int
             The current FSM state.
         """
-        line_error, right_speed, left_speed, line_heading, heading = shares
+        line_error, right_speed, left_speed, line_heading, heading, heading_set = shares
         while True:
             error_here = 0
             if self.state == self.S0_init:
@@ -98,29 +98,67 @@ class ControlTask:
                 if line_heading_here == 0:
                     error_here = line_error.get()
                     self.speed = self.base_speed
+
+                    self.now = ticks_ms()
+                    self.del_time = ticks_diff(self.now, self.prev_time)
+
+                    self.integral += error_here * (self.del_time / 1000)
+
+                    output = int(self.k_p * error_here + self.k_i * self.integral)
+
+                    self.prev_error = error_here
+                    self.prev_time = self.now
+
+                    right_speed.put(int(self.speed - output))
+                    left_speed.put(int(self.speed + output))
+
+                    yield self.state
                 elif line_heading_here == 1 or line_heading_here == -1:
                     if line_heading_here == 1:
                         self.speed = self.base_speed
                     else:
                         self.speed = -self.base_speed
-                        error_here = heading.get() - self.heading_set
-                elif line_heading_here == 2:  # maybe adjust
-                    self.right_output = -15
-                    self.left_output = 15
+
+                    error_here = heading.get() - heading_set.get()
+                    self.now = ticks_ms()
+                    self.del_time = ticks_diff(self.now, self.prev_time)
+
+                    self.integral += error_here * (self.del_time / 1000)
+
+                    output = int((self.k_p/25) * error_here + self.k_i * self.integral)
+
+                    self.prev_error = error_here
+                    self.prev_time = self.now
+
+                    right_speed.put(int(self.speed + line_heading_here*output))
+                    left_speed.put(int(self.speed - line_heading_here*output))
+
+                    yield self.state
+                elif line_heading_here == 2:  # turn state
+                    error_here = heading.get() - heading_set.get()
+                    self.now = ticks_ms()
+                    self.del_time = ticks_diff(self.now, self.prev_time)
+
+                    self.integral += error_here * (self.del_time / 1000)
+
+                    output = int((15/25) * error_here + self.k_i * self.integral)
+
+                    self.prev_error = error_here
+                    self.prev_time = self.now
+
+                    right_speed.put(max(-60, min(output, 60)))
+                    left_speed.put(max(-60, min(-output, 60)))
+
                     yield self.state
                 elif line_heading_here == 3:
+                    self.right_output = -30
+                    self.left_output = -30
+                    right_speed.put(self.right_output)
+                    left_speed.put(self.left_output)
                     yield self.state
-                self.now = ticks_ms()
-                self.del_time = ticks_diff(self.now, self.prev_time)
-
-                self.integral += error_here * (self.del_time / 1000)
-
-                output = int(self.k_p * error_here + self.k_i * self.integral)
-
-                self.prev_error = error_here
-                self.prev_time = self.now
-
-                right_speed.put(int(self.speed - output))
-                left_speed.put(int(self.speed + output))
-
-                yield self.state
+                elif line_heading_here == 4:
+                    self.right_output = 0
+                    self.left_output = 0
+                    right_speed.put(self.right_output)
+                    left_speed.put(self.left_output)
+                    yield self.state

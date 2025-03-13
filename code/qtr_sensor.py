@@ -23,8 +23,10 @@ class QTRSensor:
         self.pins = [ADC(pin) for pin in pins]  # Create ADC objects for each pin
         self.control=Pin(ctrl,mode=Pin.OUT_PP)
         self.control.high()
-        self.white = [2427, 2067, 2157, 2114, 2020, 2107, 2100]
-        self.black = [3233, 2912, 3100, 3082, 3089, 3110, 3055]
+        # self.white = [2427, 2067, 2157, 2114, 2020, 2107, 2100]
+        # self.black = [3233, 2912, 3100, 3082, 3089, 3110, 3055]
+        self.white = [695, 320, 478, 364, 506, 386, 542]
+        self.black = [2674, 2327, 2235, 2427, 2700, 2648, 2635]
         #pass
 
     

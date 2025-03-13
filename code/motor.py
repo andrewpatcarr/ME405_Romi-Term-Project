@@ -118,7 +118,10 @@ class Motor:
 
         output = int(self.kp * error) + self.ki * self.integral
         if mode == 0:
-            self.forward(output + vel)
+            if output >= 0:
+                self.forward(output)
+            elif output < 0:
+                self.reverse(-output)
         elif mode == 1:
             if output >= 0:
                 self.forward(-output)

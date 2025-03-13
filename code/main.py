@@ -102,11 +102,11 @@ bumper_inter = ExtInt(bumper_pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, bumper_pushed
 
 
 encoder = EncoderTask(enc_pins)
-motor = MotorTask(motor_pins[0:4], motor_pins[4:8], 4, 1, [.7, 0], [.7, 0])
+motor = MotorTask(motor_pins[0:4], motor_pins[4:8], 4, 1, [.7, 0], [.9, 0])
 data_collecting = DataCollectionTask()
 qtr = QTRSensor(qtr_pins, ir_ctrl)
 qtr_more = QTRTask(qtr)
-control = ControlTask([20, 0, 0], 0)  # [k_p, k_i, K_d], offset
+control = ControlTask([18, 0, 0], 0)  # [k_p, k_i, K_d], offset
 imu = BNO055(i2c, 'A15')
 imu_more = HeadingTask(imu)
 
@@ -136,6 +136,7 @@ if __name__ == '__main__':
     r_path = task_share.Share('h', name="Right Path")
     l_path = task_share.Share('h', name="Left Path")
     line_heading = task_share.Share('h', name="Line Switch")
+    heading_set = task_share.Share('f', name="Line Switch")
 
 
     enc_task = cotask.Task(encoder.encoder_gen, name='Encoder Task', priority=1, period=1,
@@ -143,7 +144,7 @@ if __name__ == '__main__':
 
     motor_task = cotask.Task(motor.go, name='Motor Task', priority=1, period=8,
                            shares=([right_speed, left_speed, right_stop, left_stop, right_vel, left_vel]), trace=False, profile=True)
-    controller_task = cotask.Task(control.controller, name='Control Task', priority=1, period=8, shares=[line_error, right_speed, left_speed, line_heading, heading], trace=False, profile=True)
+    controller_task = cotask.Task(control.controller, name='Control Task', priority=1, period=8, shares=[line_error, right_speed, left_speed, line_heading, heading, heading_set], trace=False, profile=True)
     qtr_task = cotask.Task(qtr_more.get_line, name='QTR Task', priority=1, period=10, shares=line_error, trace=False, profile=True)
     imu_task = cotask.Task(imu_more.get_heading, name='IMU Task', priority=1, period=15, shares=heading, trace=False, profile=True)
 
@@ -157,15 +158,15 @@ if __name__ == '__main__':
     left_speed.put(0)
     left_stop.put(1)
 
-    print('place on white')
-    wait_for_button()
-    qtr.calibrate_white()
+    # print('place on white')
+    # wait_for_button()
+    # qtr.calibrate_white()
+    #
+    # print('place on black')
+    # wait_for_button()
+    # qtr.calibrate_black()
 
-    print('place on black')
-    wait_for_button()
-    qtr.calibrate_black()
-
-    interval = 5000
+    interval = 500
     begin_time = ticks_ms()
     deadline = ticks_add(begin_time, interval)
     right_stop.put(0)
@@ -193,6 +194,8 @@ if __name__ == '__main__':
     wall_location = 10000
     thresh = 0
     rep = 0
+    heading_north = 0
+    hed_set = 0
 
     print('Press button to start run')
 
@@ -202,11 +205,11 @@ if __name__ == '__main__':
             """Print Section"""
             now = ticks_ms()
             if ticks_diff(deadline, now) < 0:
-                print(f'Right_Pos: {right_pos.get()}, State: {state}, R_speed: {right_speed.get()}')
+                print(f'Right_Pos- thresh: {right_pos.get() - thresh}, State: {state}, R_speed: {right_speed.get()}, Heading: {heading.get()}')
                 deadline = ticks_add(deadline, interval)
 
             if state == S0_wait_to_start:
-                line_heading.put(3)
+                line_heading.put(4)
                 if button_state != prev_button_state:
                     prev_button_state = button_state
                     sleep(.2)
@@ -219,8 +222,9 @@ if __name__ == '__main__':
             if state == S1_to_diamond:
                 line_heading.put(0)
                 if rep == 0:
-                    thresh = right_pos.get() + 5000
+                    thresh = right_pos.get() + 5_500
                     heading_north = imu.read_heading()
+                    print(f'Heading North: {heading_north}')
                     rep += 1
 
                 if right_pos.get() > thresh:
@@ -228,9 +232,18 @@ if __name__ == '__main__':
                     rep = 0
 
             if state == S2_straightline_diamond:
-                line_heading.put(3)
+
                 if rep == 0:
-                    thresh = right_pos.get() + 100
+                    line_heading.put(1)
+                    hed_set = heading_north + 90
+
+                    if hed_set < 0:
+                        hed_set += 360
+                    elif hed_set > 360:
+                        hed_set -= 360
+                    heading_set.put(hed_set)
+                    thresh = right_pos.get() + 1_000
+                    print(f'Threshold: {thresh}, hed_set: {hed_set}')
                     rep += 1
                 if right_pos.get() > thresh:
                     state = S3_to_grid
@@ -238,7 +251,7 @@ if __name__ == '__main__':
             if state == S3_to_grid:
                 line_heading.put(0)
                 if rep == 0:
-                    thresh = right_pos.get() + 14400000
+                    thresh = right_pos.get() + 18_000-2_000
                     rep += 1
                 if right_pos.get() > thresh:
                     state = S4_to_turn
@@ -246,17 +259,30 @@ if __name__ == '__main__':
             if state == S4_to_turn:
                 line_heading.put(1)
                 if rep == 0:
-                    thresh = right_pos.get() + 144000000
+                    thresh = right_pos.get() + 4_000
+                    hed_set = heading_north - 180
+                    if hed_set < 0:
+                        hed_set += 360
+                    elif hed_set > 360:
+                        hed_set -= 360
+                    heading_set.put(hed_set)
                     rep += 1
                 if right_pos.get() > thresh:
                     state = S5_turn_1
-                    rep == 0
+                    right_speed.put(0)
+                    left_speed.put(0)
+                    rep = 0
             if state == S5_turn_1:
                 if rep == 0:
-                    thresh = right_pos.get() - 144000000/4
+                    hed_set = heading_north - 90
+                    if hed_set < 0:
+                        hed_set += 360
+                    elif hed_set > 360:
+                        hed_set -= 360
+                    heading_set.put(hed_set)
+                    line_heading.put(2)
                     rep += 1
-                line_heading.put(2)
-                if right_pos.get() > thresh:
+                if -10 < (hed_set - heading.get()) < 10:
                     right_speed.put(0)
                     left_speed.put(0)
                     state = S6_to_wall
@@ -264,27 +290,116 @@ if __name__ == '__main__':
             if state == S6_to_wall:
                 line_heading.put(0)
                 if bumper_state:
+                    print(f'Bumper hit')
                     right_speed.put(0)
                     left_speed.put(0)
                     state = S7_reverse
             if state == S7_reverse:
-                line_heading.put(-1)
+                line_heading.put(3)
+
                 if rep == 0:
-                    thresh = right_pos.get() - 144000000/2
-                rep = 1
-                if right_pos.get() > thresh:
+                    thresh = right_pos.get() - 500
+                    hed_set = heading_north - 90
+
+                    if hed_set < 0:
+                        hed_set += 360
+                    elif hed_set > 360:
+                        hed_set -= 360
+                    print(f'hed_set: {hed_set}')
+                    heading_set.put(hed_set)
+                    rep += 1
+                if right_pos.get() < thresh:
                     right_speed.put(0)
                     left_speed.put(0)
                     state = S8_turn_2
+                    rep = 0
             if state == S8_turn_2:
-                thresh = right_pos.get() - 1440000000 / 4
                 line_heading.put(2)
-                if right_pos.get() > thresh:
+                if rep == 0:
+                    hed_set = heading_north
+                    if hed_set < 0:
+                        hed_set += 360
+                    elif hed_set > 360:
+                        hed_set -= 360
+                    heading_set.put(hed_set)
+                    line_heading.put(2)
+                    rep += 1
+                if -10 < (hed_set - heading.get()) < 10:
                     right_speed.put(0)
                     left_speed.put(0)
                     state = S9_to_3
+                    rep = 0
             if state == S9_to_3:
                 line_heading.put(1)
+                heading_set.put(heading_north)
+                if rep == 0:
+                    thresh = right_pos.get() + 2_000
+                    rep += 1
+                if right_pos.get() > thresh:
+                    state = S10_turn_3
+                    rep = 0
+            if state == S10_turn_3:
+                line_heading.put(2)
+                if rep == 0:
+                    hed_set = heading_north - 90
+                    if hed_set < 0:
+                        hed_set += 360
+                    elif hed_set > 360:
+                        hed_set -= 360
+                    heading_set.put(hed_set)
+                    line_heading.put(2)
+                    rep += 1
+                if -10 < (hed_set - heading.get()) < 10:
+                    right_speed.put(0)
+                    left_speed.put(0)
+                    state = S11_to_4
+                    rep = 0
+            if state == S11_to_4:
+                line_heading.put(1)
+                hed_set = heading_north - 90
+                if hed_set < 0:
+                    hed_set += 360
+                elif hed_set > 360:
+                    hed_set -= 360
+                heading_set.put(hed_set)
+                if rep == 0:
+                    thresh = right_pos.get() + 2_000
+                    rep += 1
+                if right_pos.get() > thresh:
+                    state = S12_turn_4
+                    rep = 0
+            if state == S12_turn_4:
+                line_heading.put(2)
+                if rep == 0:
+                    hed_set = heading_north - 180
+                    if hed_set < 0:
+                        hed_set += 360
+                    elif hed_set > 360:
+                        hed_set -= 360
+                    heading_set.put(hed_set)
+                    line_heading.put(2)
+                    rep += 1
+                if -10 < (hed_set - heading.get()) < 10:
+                    right_speed.put(0)
+                    left_speed.put(0)
+                    state = S13_to_finish
+                    rep = 0
+            if state == S13_to_finish:
+                if rep == 0:
+                    hed_set = heading_north - 180
+                    if hed_set < 0:
+                        hed_set += 360
+                    elif hed_set > 360:
+                        hed_set -= 360
+                    heading_set.put(hed_set)
+                    line_heading.put(1)
+                    thresh = right_pos.get() + 2_200
+                    rep += 1
+                if right_pos.get() > thresh:
+                    state = S0_wait_to_start
+                    rep = 0
+
+                    print('Done!')
 
 
     except KeyboardInterrupt:
@@ -293,9 +408,9 @@ if __name__ == '__main__':
     right_stop.put(1)
     left_speed.put(0)
     left_stop.put(1)
-    print('\n' + str(cotask.task_list))
-    print(task_share.show_all())
-    print('')
+    # print('\n' + str(cotask.task_list))
+    # print(task_share.show_all())
+    # print('')
     while True:
         cotask.task_list.pri_sched()
         pass
