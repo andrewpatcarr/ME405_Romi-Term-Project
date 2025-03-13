@@ -1,0 +1,8 @@
+.rst-content table.docutils {
+    text-align: center;
+}
+
+.rst-content table.docutils td,
+.rst-content table.docutils th {
+    text-align: center;
+}
