@@ -130,8 +130,10 @@ class ControlTask:
                     self.prev_error = error_here
                     self.prev_time = self.now
 
-                    right_speed.put(int(self.speed + line_heading_here*output))
-                    left_speed.put(int(self.speed - line_heading_here*output))
+                    # right_speed.put(int(self.speed + line_heading_here*output))
+                    # left_speed.put(int(self.speed - line_heading_here*output))
+                    right_speed.put(max(-60, min(int(self.speed + line_heading_here*output), 60)))
+                    left_speed.put(max(-60, min(int(self.speed - line_heading_here*output), 60)))
 
                     yield self.state
                 elif line_heading_here == 2:  # turn state

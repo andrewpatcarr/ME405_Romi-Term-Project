@@ -26,7 +26,7 @@ class HeadingTask:
                 yield self.state
 
             elif self.state == self.S1_read:
-                heading_here = self.imu.read_heading()
+                heading_here = (self.imu.read_heading()+90)%360
                 #heading_error_here = (self.target_heading - current_heading + 180) % 360 - 180  # Wraparound correction
                 #self.error.put(heading_error)
                 heading.put(heading_here)

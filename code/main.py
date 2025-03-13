@@ -12,7 +12,6 @@ from control_task import ControlTask
 from heading_task import HeadingTask
 from BNO055 import BNO055
 
-
 right_pwm_pin = "B9"
 right_dir_pin = "H1"
 right_slp_pin = "H0"
@@ -43,12 +42,16 @@ button = Pin(user_button_pin, Pin.IN, Pin.PULL_UP)
 sw_1 = Switch()
 prev_button_state = False
 button_state = False
+
+
 def button_pushed():
     global button_state
     button_state = not button_state
     sleep(.200)  # Debouncing delay
 
+
 sw_1.callback(button_pushed)
+
 
 def wait_for_button():
     global button_state, prev_button_state
@@ -58,13 +61,13 @@ def wait_for_button():
             break
 
 
-
 enc_pins = [right_enc_A, right_enc_B, right_enc_timer, left_enc_A, left_enc_B, left_enc_timer]
-motor_pins = [right_pwm_pin, right_dir_pin, right_slp_pin, right_pwm_timer, left_pwm_pin, left_dir_pin, left_slp_pin, left_pwm_timer]
+motor_pins = [right_pwm_pin, right_dir_pin, right_slp_pin, right_pwm_timer, left_pwm_pin, left_dir_pin, left_slp_pin,
+              left_pwm_timer]
 qtr_pins = [ir_1, ir_3, ir_5, ir_7, ir_9, ir_11, ir_13]
 
-right_motor = Motor([right_pwm_pin, right_dir_pin, right_slp_pin, right_pwm_timer],4, [1,0])
-left_motor = Motor([left_pwm_pin, left_dir_pin, left_slp_pin, left_pwm_timer],1, [1,0])
+right_motor = Motor([right_pwm_pin, right_dir_pin, right_slp_pin, right_pwm_timer], 4, [1, 0])
+left_motor = Motor([left_pwm_pin, left_dir_pin, left_slp_pin, left_pwm_timer], 1, [1, 0])
 right_motor.stop()
 left_motor.stop()
 
@@ -85,12 +88,14 @@ bumper_state = False
 last_interrupt_time = 0  # Stores the last trigger time
 debounce_delay = 50  # Debounce delay in milliseconds
 
+
 def bumper_pushed(line):
     global bumper_state, last_interrupt_time
     current_time = millis()  # Get current time in ms
     if (current_time - last_interrupt_time) > debounce_delay:  # Check debounce
         bumper_state = True
         last_interrupt_time = current_time  # Update last trigger time
+
 
 bumper_inter = ExtInt(bumper_pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, bumper_pushed)
 #
@@ -109,7 +114,6 @@ qtr_more = QTRTask(qtr)
 control = ControlTask([18, 0, 0], 0)  # [k_p, k_i, K_d], offset
 imu = BNO055(i2c, 'A15')
 imu_more = HeadingTask(imu)
-
 
 if __name__ == '__main__':
     """
@@ -138,15 +142,19 @@ if __name__ == '__main__':
     line_heading = task_share.Share('h', name="Line Switch")
     heading_set = task_share.Share('f', name="Line Switch")
 
-
     enc_task = cotask.Task(encoder.encoder_gen, name='Encoder Task', priority=1, period=1,
                            shares=([right_pos, right_vel, left_pos, left_vel]), trace=False, profile=True)
 
     motor_task = cotask.Task(motor.go, name='Motor Task', priority=1, period=8,
-                           shares=([right_speed, left_speed, right_stop, left_stop, right_vel, left_vel]), trace=False, profile=True)
-    controller_task = cotask.Task(control.controller, name='Control Task', priority=1, period=8, shares=[line_error, right_speed, left_speed, line_heading, heading, heading_set], trace=False, profile=True)
-    qtr_task = cotask.Task(qtr_more.get_line, name='QTR Task', priority=1, period=10, shares=line_error, trace=False, profile=True)
-    imu_task = cotask.Task(imu_more.get_heading, name='IMU Task', priority=1, period=15, shares=heading, trace=False, profile=True)
+                             shares=([right_speed, left_speed, right_stop, left_stop, right_vel, left_vel]),
+                             trace=False, profile=True)
+    controller_task = cotask.Task(control.controller, name='Control Task', priority=1, period=8,
+                                  shares=[line_error, right_speed, left_speed, line_heading, heading, heading_set],
+                                  trace=False, profile=True)
+    qtr_task = cotask.Task(qtr_more.get_line, name='QTR Task', priority=1, period=10, shares=line_error, trace=False,
+                           profile=True)
+    imu_task = cotask.Task(imu_more.get_heading, name='IMU Task', priority=1, period=15, shares=heading, trace=False,
+                           profile=True)
 
     cotask.task_list.append(enc_task)
     cotask.task_list.append(qtr_task)
@@ -205,7 +213,8 @@ if __name__ == '__main__':
             """Print Section"""
             now = ticks_ms()
             if ticks_diff(deadline, now) < 0:
-                print(f'Right_Pos- thresh: {right_pos.get() - thresh}, State: {state}, R_speed: {right_speed.get()}, Heading: {heading.get()}')
+                print(
+                    f'Right_Pos- thresh: {right_pos.get() - thresh}, State: {state}, R_speed: {right_speed.get()}, Heading: {heading.get()}')
                 deadline = ticks_add(deadline, interval)
 
             if state == S0_wait_to_start:
@@ -223,7 +232,7 @@ if __name__ == '__main__':
                 line_heading.put(0)
                 if rep == 0:
                     thresh = right_pos.get() + 5_500
-                    heading_north = imu.read_heading()
+                    heading_north = (imu.read_heading()+90)%360
                     print(f'Heading North: {heading_north}')
                     rep += 1
 
@@ -251,7 +260,7 @@ if __name__ == '__main__':
             if state == S3_to_grid:
                 line_heading.put(0)
                 if rep == 0:
-                    thresh = right_pos.get() + 18_000-2_000
+                    thresh = right_pos.get() + 18_000 - 2_000
                     rep += 1
                 if right_pos.get() > thresh:
                     state = S4_to_turn
@@ -414,6 +423,6 @@ if __name__ == '__main__':
     while True:
         cotask.task_list.pri_sched()
         pass
-    
+
 
 
