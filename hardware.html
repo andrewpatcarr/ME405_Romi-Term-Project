@@ -293,24 +293,29 @@
 </section>
 <section id="romi">
 <h2>Romi<a class="headerlink" href="#romi" title="Link to this heading">¶</a></h2>
-<p>&lt;add stuff about base romi, wheel motors, motor driver&gt;</p>
+<p>Romi is a small differential drive robot that uses two wheels powered by DC motors with encoders. Romi has a Shoe of Brian and Nucleo-L476RG along with attached components like a bump sensor, QTR sensor, and IMU. The plastic chassis is lightweight allowing easier configuration and navigation. The two DC motors are connected to a gearbox for proper torque, controlled by pulse width modulation signals, allowing for variable speed control. The encoders connected to the motors allow for a closed feedback loop, so we can implement motion tracking and autonomous movement. The motor driver controls the voltage and current to each motor, allowing for bidirectional movement and speed control.
+&lt;add stuff about base romi, wheel motors, motor driver&gt;</p>
 <p><a class="reference external" href="http://google.com">Link test</a></p>
 </section>
 <section id="stm-32-nucleo">
 <h2>STM-32 Nucleo<a class="headerlink" href="#stm-32-nucleo" title="Link to this heading">¶</a></h2>
-<p>&lt;add stuff about this&gt;</p>
+<p>The STM32 Nucleo is the main microcontroller for Romi. The board has an ARM processor, various GPIO pins, and interfaces for I2C, SPI, and UART. The Nucleo allows for real time data processing, sensor integraiton and motor control through MicroPython.
+&lt;add stuff about this&gt;</p>
 </section>
 <section id="qtr-sensor">
 <h2>QTR Sensor<a class="headerlink" href="#qtr-sensor" title="Link to this heading">¶</a></h2>
-<p>&lt;add stuff about how it works, i think not talk about code in this but in other section but idk&gt;</p>
+<p>The QTR sensor has an array of infared reflectance sensor for line following, consisting of an IR LED and phototransistor to detect reflectance of the surface it is pointed at. White surfaces return high readings, while black surfaces return low readings. This sensor helps ROMI implement PID line following, adjusting motor speeds based on intensity of relfected light to the sensor.
+&lt;add stuff about how it works, i think not talk about code in this but in other section but idk&gt;</p>
 </section>
 <section id="imu">
 <h2>IMU<a class="headerlink" href="#imu" title="Link to this heading">¶</a></h2>
-<p>&lt;add stuff about the imu, how it works etc.&gt;</p>
+<p>We use an intertial measurement unit to track acceleration, angular velocity, and magnetic field heading. Romi uses a BNO055 which allows us to track orientation, feedback, and any environmental disturbances. We use I2C to communicate for motion planning and course corrections.
+&lt;add stuff about the imu, how it works etc.&gt;</p>
 </section>
 <section id="bump-sensor">
 <h2>Bump Sensor<a class="headerlink" href="#bump-sensor" title="Link to this heading">¶</a></h2>
-<p>&lt;add stuff about bump sensor, cad, how it work&gt;</p>
+<p>The bump sensor uses a gat switch to detect physical collisions in the robot’s path. We integrated the sensor using a 3D printed part. When the bump sensor is activated, it sends a signal to the microcontroller, which when then have the robot reverse and reapproach the obstacle. This is essential for navigating the course for what the IR sensor cannot detect.
+&lt;add stuff about bump sensor, cad, how it work&gt;</p>
 </section>
 </section>
 
