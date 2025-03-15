@@ -179,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -252,7 +252,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -260,6 +260,98 @@
         <article role="main" id="furo-main-content">
           <section id="programming">
 <h1>Programming<a class="headerlink" href="#programming" title="Link to this heading">¶</a></h1>
+<p>Written in micropython, our codebase is devised of scheduler based tasks written as finite state machines
+with shared variables. Each peripheral has its own class with task class to handle its integration.</p>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">¶</a></h2>
+<p>We use Cal Poly’s <a class="reference external" href="https://spluttflob.github.io/ME405-Support/index.html">ME405-Support libraries</a>
+which provide the python files for implementation of tasks, shares and queues. This allows us to time
+when we get sensor readings, drive motors and use our controller. Shares allow us to have variables
+that different tasks can use and change. For example, our controller task can adjust the motor speed
+share which the motor task reads and uses to drive the motors to achieve a goal.</p>
+<p>// insert updated task diagram –&gt; only include the tasks we are using in the final project</p>
+</section>
+<section id="shares">
+<h2>Shares<a class="headerlink" href="#shares" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 16.7%" />
+<col style="width: 58.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Shared Variable</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>right_pos</p></td>
+<td><p>signed float</p></td>
+<td><p>Encoder position in ticks of right motor</p></td>
+</tr>
+<tr class="row-odd"><td><p>left_pos</p></td>
+<td><p>signed float</p></td>
+<td><p>Encoder position in ticks of left motor</p></td>
+</tr>
+<tr class="row-even"><td><p>right_vel</p></td>
+<td><p>signed float</p></td>
+<td><p>Velocity of right motor in ticks/us</p></td>
+</tr>
+<tr class="row-odd"><td><p>left_vel</p></td>
+<td><p>signed float</p></td>
+<td><p>Velocity of left motor in ticks/us</p></td>
+</tr>
+<tr class="row-even"><td><p>right_speed</p></td>
+<td><p>signed int</p></td>
+<td><p>Desired direction and PWM % of right motor</p></td>
+</tr>
+<tr class="row-odd"><td><p>left_speed</p></td>
+<td><p>signed int</p></td>
+<td><p>Desired direction and PWM % of left motor</p></td>
+</tr>
+<tr class="row-even"><td><p>right_stop</p></td>
+<td><p>signed int</p></td>
+<td><p>Value of stop state of right motor (0 on, 1 off)</p></td>
+</tr>
+<tr class="row-odd"><td><p>left_stop</p></td>
+<td><p>signed int</p></td>
+<td><p>Value of stop state of left motor (0 on, 1 off)</p></td>
+</tr>
+<tr class="row-even"><td><p>line_error</p></td>
+<td><p>signed float</p></td>
+<td><p>Error value of black line under line sensor</p></td>
+</tr>
+<tr class="row-odd"><td><p>heading</p></td>
+<td><p>signed float</p></td>
+<td><p>Current heading reading from IMU in degrees</p></td>
+</tr>
+<tr class="row-even"><td><p>heading_set</p></td>
+<td><p>signed float</p></td>
+<td><p>Desired heading angle in degrees</p></td>
+</tr>
+<tr class="row-odd"><td><p>line_heading</p></td>
+<td><p>signed int</p></td>
+<td><p>Value determining controller state, (0, line following; 1 or -1 (reverse), heading following; 2, in place heading following
+(turn); 3, straight reverse; 4, stop)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="finite-state-machines">
+<h2>Finite State Machines<a class="headerlink" href="#finite-state-machines" title="Link to this heading">¶</a></h2>
+<p>Each our tasks use generators written as finite state machines (FSM)</p>
+<p>// insert FSM diagrams</p>
+<p>In main, we use a FSM to complete the course. It features hardcoded encoder position thresholds which jump between
+line following, heading following and full reverse modes.</p>
+</section>
+<section id="course-fsm">
+<h2>Course FSM<a class="headerlink" href="#course-fsm" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="_images/course_state_machine.png"><img alt="course_state_machine" src="_images/course_state_machine.png" style="width: 800px;" />
+</a>
+</section>
 </section>
 
         </article>
@@ -305,8 +397,30 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Programming</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#shares">Shares</a></li>
+<li><a class="reference internal" href="#finite-state-machines">Finite State Machines</a></li>
+<li><a class="reference internal" href="#course-fsm">Course FSM</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
