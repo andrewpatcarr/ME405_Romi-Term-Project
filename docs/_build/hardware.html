@@ -288,13 +288,21 @@
 <td><p>1</p></td>
 <td><p>A single-pole, double-throw momentary switch used as a tactile bump sensor for physical collisions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.pololu.com/product/4253">QTR-MD-13A Reflectance Sensor Array</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.pololu.com/product/4213">QTR-HD-13A Reflectance Sensor Array</a></p></td>
 <td><p>1</p></td>
 <td><p>A 13-channel array of IR LED/phototransistor pairs with 4mm length, used for precise line detection and following.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://www.pololu.com/product/3675">Gearmotor and Encoder Assembly for Romi/TI-RSLK MAX</a></p></td>
 <td><p>2</p></td>
 <td><p>Gearmotors with encoders pre-installed, providing feedback for precise motor control</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor/overview">Adafruit BNO055 IMU</a></p></td>
+<td><p>1</p></td>
+<td><p>9-DOF absolute orientation sensor</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.st.com/en/evaluation-tools/nucleo-l476rg.html">STM32 NUCLEO-L476RG</a></p></td>
+<td><p>1</p></td>
+<td><p>Microcontroller Dev Board</p></td>
 </tr>
 </tbody>
 </table>
@@ -311,27 +319,46 @@ pulse width modulation signals, allowing for variable speed control. The
 encoders connected to the motors allow for a closed feedback loop, so we
 can implement motion tracking and autonomous movement. The motor driver
 controls the voltage and current to each motor, allowing for bidirectional
-movement and speed control.
-&lt;add stuff about base romi, wheel motors, motor driver&gt;</p>
+movement and speed control.</p>
 </section>
 <section id="stm-32-nucleo">
 <h2>STM-32 Nucleo<a class="headerlink" href="#stm-32-nucleo" title="Link to this heading">¶</a></h2>
-<p>The STM32 Nucleo is the main microcontroller for Romi. The board has an ARM processor, various GPIO pins, and interfaces for I2C, SPI, and UART. The Nucleo allows for real time data processing, sensor integraiton and motor control through MicroPython.</p>
+<p>Our Romi uses a STM32 Nucleo (particularly the <a class="reference external" href="https://www.st.com/en/evaluation-tools/nucleo-l476rg.html">NUCLEO-L476RG</a>)
+as its microcontroller. The board has an ARM processor, various GPIO pins,
+and interfaces for I2C, SPI, and UART. The Nucleo allows for real time data processing, sensor
+integration and motor control through MicroPython.</p>
 </section>
 <section id="qtr-sensor">
 <h2>QTR Sensor<a class="headerlink" href="#qtr-sensor" title="Link to this heading">¶</a></h2>
-<p>The QTR sensor has an array of infared reflectance sensor for line following, consisting of an IR LED and phototransistor to detect reflectance of the surface it is pointed at. White surfaces return high readings, while black surfaces return low readings. This sensor helps ROMI implement PID line following, adjusting motor speeds based on intensity of relfected light to the sensor.
-&lt;add stuff about how it works, i think not talk about code in this but in other section but idk&gt;</p>
+<p>The QTR sensor has an array of infrared reflectance sensor for line following, consisting of an IR LED
+and phototransistor to detect reflectance of the surface it is pointed at. White surfaces return high readings,
+while black surfaces return low readings. This sensor helps ROMI implement PID line following, adjusting motor
+speeds based on intensity of reflected light to the sensor.</p>
+<a class="reference internal image-reference" href="_images/qtr_pic.jpg"><img alt="QTR Sensor" src="_images/qtr_pic.jpg" style="width: 600px;" />
+</a>
+<p>Image used from <a class="reference external" href="https://a.pololu-files.com/picture/0J9915.1200.jpg?cc7523ea26737e153f8346b5d38e696a">pololu.com</a>.</p>
 </section>
 <section id="imu">
 <h2>IMU<a class="headerlink" href="#imu" title="Link to this heading">¶</a></h2>
-<p>We use an intertial measurement unit to track acceleration, angular velocity, and magnetic field heading. Romi uses a BNO055 which allows us to track orientation, feedback, and any environmental disturbances. We use I2C to communicate for motion planning and course corrections.
-&lt;add stuff about the imu, how it works etc.&gt;</p>
+<p>We use an inertial measurement unit to track acceleration, angular velocity, and magnetic field heading.
+Romi uses a BNO055 from adafruit which is a 9-DOF absolute orientation sensor using an accelerometer,
+gyroscope and a magnetometer. This allows us to track orientation, follow angles relative to north,
+and any environmental disturbances. We use I2C to communicate between our microcontroller and the IMU.</p>
+<a class="reference internal image-reference" href="_images/imu_pic.jpg"><img alt="IMU" src="_images/imu_pic.jpg" style="width: 600px;" />
+</a>
+<p>Photo used from <a class="reference external" href="https://learn.adafruit.com/assets/24585">adafruit.com</a>.</p>
 </section>
 <section id="bump-sensor">
 <h2>Bump Sensor<a class="headerlink" href="#bump-sensor" title="Link to this heading">¶</a></h2>
-<p>The bump sensor uses a gate switch to detect physical collisions in the robot’s path. We integrated the sensor using a 3D printed part. When the bump sensor is activated, it sends a signal to the microcontroller, which when then have the robot reverse and reapproach the obstacle. This is essential for navigating the course for what the IR sensor cannot detect.
-&lt;add stuff about bump sensor, cad, how it work&gt;</p>
+<p>The bump sensor uses a gate switch to detect physical collisions in the robot’s path. We integrated the sensor
+using a 3D printed part. When the bump sensor is activated, it sends a signal to the microcontroller, which when
+then have the robot react to its situation. In the course, this meant the robot would reverse before going around
+the wall. This adds another sense to our robot which is essential to navigate the final course.</p>
+</section>
+<section id="bump-sensor-cad">
+<h2>Bump Sensor CAD<a class="headerlink" href="#bump-sensor-cad" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="_images/bump_sensor_cad.png"><img alt="Bump Sensor CAD" src="_images/bump_sensor_cad.png" style="width: 800px;" />
+</a>
 </section>
 </section>
 
@@ -397,6 +424,7 @@ movement and speed control.
 <li><a class="reference internal" href="#qtr-sensor">QTR Sensor</a></li>
 <li><a class="reference internal" href="#imu">IMU</a></li>
 <li><a class="reference internal" href="#bump-sensor">Bump Sensor</a></li>
+<li><a class="reference internal" href="#bump-sensor-cad">Bump Sensor CAD</a></li>
 </ul>
 </li>
 </ul>
