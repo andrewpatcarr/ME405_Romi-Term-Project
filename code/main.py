@@ -6,7 +6,6 @@ import cotask
 import task_share
 from encoder_task import EncoderTask
 from motor_task import MotorTask
-from data_collection_task import DataCollectionTask
 from qtr_sensor import QTRSensor, QTRTask
 from control_task import ControlTask
 from heading_task import HeadingTask
@@ -73,14 +72,6 @@ left_motor.stop()
 
 i2c = I2C(3, I2C.CONTROLLER)  # Make sure you're using the correct I2C bus
 sleep(1)  # Allow devices to power up
-#
-# devices = i2c.scan()  # Scan for I2C devices
-# print(f"Detected I2C devices: {devices}")
-#
-# if not devices:
-#     print("No I2C devices found")
-# else:
-#     print(f"Found I2C devices at addresses: {[hex(dev) for dev in devices]}")
 
 bumper_pin = Pin('B14', Pin.IN, Pin.PULL_UP)
 prev_bumper_state = False
@@ -98,17 +89,10 @@ def bumper_pushed(line):
 
 
 bumper_inter = ExtInt(bumper_pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, bumper_pushed)
-#
-# while True:
-#     print(f'Bumper State: {bumper_state}')
-#     if bumper_state:
-#         print('Bumper Hit!')
-#         break
 
 
 encoder = EncoderTask(enc_pins)
 motor = MotorTask(motor_pins[0:4], motor_pins[4:8], 4, 1, [.7, 0], [.9, 0])
-data_collecting = DataCollectionTask()
 qtr = QTRSensor(qtr_pins, ir_ctrl)
 qtr_more = QTRTask(qtr)
 control = ControlTask([18, 0, 0], 0)  # [k_p, k_i, K_d], offset
@@ -127,18 +111,8 @@ if __name__ == '__main__':
     right_stop = task_share.Share('h', name="Right Stop")
     left_speed = task_share.Share('h', name="Left speed")  # Input Speed for motor pwm [%]
     left_stop = task_share.Share('h', name="Left Stop")
-    right_mes_pos = task_share.Share('f', name="Right Mes Pos")
-    left_mes_pos = task_share.Share('f', name="Left Mes Pos")
-    right_mes_vel = task_share.Share('f', name="Right Mes Vel")
-    left_mes_vel = task_share.Share('f', name="Left Mes Vel")
-    times = task_share.Queue('h', 2000, name="Times")
-    data_collect = task_share.Share('h', name="Data Collect?")
-    rolling = task_share.Share('h', name="Rolling")
     line_error = task_share.Share('f', name="Error")
     heading = task_share.Share('f', name="Heading Error")
-    user_input = task_share.Share('h', name="User Input")
-    r_path = task_share.Share('h', name="Right Path")
-    l_path = task_share.Share('h', name="Left Path")
     line_heading = task_share.Share('h', name="Line Switch")
     heading_set = task_share.Share('f', name="Line Switch")
 
