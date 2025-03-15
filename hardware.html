@@ -265,42 +265,16 @@
 <h1>Hardware<a class="headerlink" href="#hardware" title="Link to this heading">¶</a></h1>
 <section id="components">
 <h2>Components<a class="headerlink" href="#components" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper colwidths-given docutils container">
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 41.7%" />
-<col style="width: 16.7%" />
-<col style="width: 41.7%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Item</p></th>
-<th class="head"><p>#</p></th>
-<th class="head"><p>Notes</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.pololu.com/category/203/romi-chassis-kits">Romi Chassis Kit</a></p></td>
-<td><p>1</p></td>
-<td><p>blah blah</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.pololu.com/category/204/romi-chassis-components">Romi Ball Caster Kit</a></p></td>
-<td><p>1</p></td>
-<td><p>blah blah</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </section>
 <section id="romi">
 <h2>Romi<a class="headerlink" href="#romi" title="Link to this heading">¶</a></h2>
 <p>Romi is a small differential drive robot that uses two wheels powered by DC motors with encoders. Romi has a Shoe of Brian and Nucleo-L476RG along with attached components like a bump sensor, QTR sensor, and IMU. The plastic chassis is lightweight allowing easier configuration and navigation. The two DC motors are connected to a gearbox for proper torque, controlled by pulse width modulation signals, allowing for variable speed control. The encoders connected to the motors allow for a closed feedback loop, so we can implement motion tracking and autonomous movement. The motor driver controls the voltage and current to each motor, allowing for bidirectional movement and speed control.
 &lt;add stuff about base romi, wheel motors, motor driver&gt;</p>
-<p><a class="reference external" href="http://google.com">Link test</a></p>
+<p><a class="reference external" href="https://youtube.com/shorts/lIelwNlQIkY">Video of test</a></p>
 </section>
 <section id="stm-32-nucleo">
 <h2>STM-32 Nucleo<a class="headerlink" href="#stm-32-nucleo" title="Link to this heading">¶</a></h2>
-<p>The STM32 Nucleo is the main microcontroller for Romi. The board has an ARM processor, various GPIO pins, and interfaces for I2C, SPI, and UART. The Nucleo allows for real time data processing, sensor integraiton and motor control through MicroPython.
-&lt;add stuff about this&gt;</p>
+<p>The STM32 Nucleo is the main microcontroller for Romi. The board has an ARM processor, various GPIO pins, and interfaces for I2C, SPI, and UART. The Nucleo allows for real time data processing, sensor integraiton and motor control through MicroPython.</p>
 </section>
 <section id="qtr-sensor">
 <h2>QTR Sensor<a class="headerlink" href="#qtr-sensor" title="Link to this heading">¶</a></h2>
@@ -314,7 +288,7 @@
 </section>
 <section id="bump-sensor">
 <h2>Bump Sensor<a class="headerlink" href="#bump-sensor" title="Link to this heading">¶</a></h2>
-<p>The bump sensor uses a gat switch to detect physical collisions in the robot’s path. We integrated the sensor using a 3D printed part. When the bump sensor is activated, it sends a signal to the microcontroller, which when then have the robot reverse and reapproach the obstacle. This is essential for navigating the course for what the IR sensor cannot detect.
+<p>The bump sensor uses a gate switch to detect physical collisions in the robot’s path. We integrated the sensor using a 3D printed part. When the bump sensor is activated, it sends a signal to the microcontroller, which when then have the robot reverse and reapproach the obstacle. This is essential for navigating the course for what the IR sensor cannot detect.
 &lt;add stuff about bump sensor, cad, how it work&gt;</p>
 </section>
 </section>
