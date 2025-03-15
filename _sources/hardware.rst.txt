@@ -10,6 +10,16 @@ Components
    :header-rows: 1
 
    * - Item
+     - #
+     - Notes
+   * - `Romi Chassis Kit <https://www.pololu.com/category/203/romi-chassis-kits>`_
+     - 1
+     - blah blah
+   * - `Romi Ball Caster Kit <https://www.pololu.com/category/204/romi-chassis-components>`_
+     - 1
+     - blah blah
+
+   * - Item
      - Quantity
      - Notes
    * - `Romi Chassis Kit <https://www.pololu.com/category/203/romi-chassis-kits>`_
