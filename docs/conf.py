@@ -22,6 +22,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon", # If using Google-style or NumPy-style docstrings
     "myst_parser",
+    "sphinxcontrib.youtube",
 ]
 if 'sphinx' in sys.modules:  # Check if the code is being run by Sphinx
     time.ticks_us = MagicMock(return_value=12345678)

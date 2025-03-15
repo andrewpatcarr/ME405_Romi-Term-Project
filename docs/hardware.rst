@@ -10,16 +10,6 @@ Components
    :header-rows: 1
 
    * - Item
-     - #
-     - Notes
-   * - `Romi Chassis Kit <https://www.pololu.com/category/203/romi-chassis-kits>`_
-     - 1
-     - blah blah
-   * - `Romi Ball Caster Kit <https://www.pololu.com/category/204/romi-chassis-components>`_
-     - 1
-     - blah blah
-
-   * - Item
      - Quantity
      - Notes
    * - `Romi Chassis Kit <https://www.pololu.com/category/203/romi-chassis-kits>`_
@@ -41,10 +31,19 @@ Components
 
 Romi
 ----
-Romi is a small differential drive robot that uses two wheels powered by DC motors with encoders. Romi has a Shoe of Brian and Nucleo-L476RG along with attached components like a bump sensor, QTR sensor, and IMU. The plastic chassis is lightweight allowing easier configuration and navigation. The two DC motors are connected to a gearbox for proper torque, controlled by pulse width modulation signals, allowing for variable speed control. The encoders connected to the motors allow for a closed feedback loop, so we can implement motion tracking and autonomous movement. The motor driver controls the voltage and current to each motor, allowing for bidirectional movement and speed control. 
+Romi is a small differential drive robot that uses two wheels powered by DC
+motors with encoders. Romi has a Shoe of Brian and Nucleo-L476RG along with
+attached components like a bump sensor, QTR sensor, and IMU. The plastic
+chassis is lightweight allowing easier configuration and navigation. The
+two DC motors are connected to a gearbox for proper torque, controlled by
+pulse width modulation signals, allowing for variable speed control. The
+encoders connected to the motors allow for a closed feedback loop, so we
+can implement motion tracking and autonomous movement. The motor driver
+controls the voltage and current to each motor, allowing for bidirectional
+movement and speed control.
 <add stuff about base romi, wheel motors, motor driver>
 
-`Video of test <https://youtube.com/shorts/lIelwNlQIkY>`_
+
 
 STM-32 Nucleo
 -------------
