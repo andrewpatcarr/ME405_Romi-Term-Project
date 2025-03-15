@@ -18,7 +18,7 @@ for different tasks.
 
 .. image:: _static/romi_pic_cropped.png
    :width: 800px
-   :alt: GameTrack
+   :alt: romi_pic_cropped
 
 We parameterized our motors, implemented task-based non-blocking programming, implemented an IR line sensor,
 and worked with an IMU. All of these labs were building towards our term project/challenge. We needed to complete

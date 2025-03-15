@@ -11,6 +11,8 @@ from control_task import ControlTask
 from heading_task import HeadingTask
 from BNO055 import BNO055
 
+"""Motor Pin Definitions"""
+
 right_pwm_pin = "B9"
 right_dir_pin = "H1"
 right_slp_pin = "H0"
@@ -27,14 +29,18 @@ left_enc_B = "A1"
 left_enc_timer = 2
 left_pwm_timer = 3
 
+"""QTR Sensor Pin Definitions"""
+
 ir_1 = 'A6'
 ir_3 = 'A7'
 ir_5 = 'C2'
-ir_7 = 'B0'  # analog in
+ir_7 = 'B0'
 ir_9 = 'C4'
 ir_11 = 'C3'
-ir_13 = 'B1'  # analog in
+ir_13 = 'B1'
 ir_ctrl = 'B2'
+
+"""Button Interrupt Creation"""
 
 user_button_pin = 'C13'
 button = Pin(user_button_pin, Pin.IN, Pin.PULL_UP)
@@ -60,18 +66,25 @@ def wait_for_button():
             break
 
 
+
 enc_pins = [right_enc_A, right_enc_B, right_enc_timer, left_enc_A, left_enc_B, left_enc_timer]
 motor_pins = [right_pwm_pin, right_dir_pin, right_slp_pin, right_pwm_timer, left_pwm_pin, left_dir_pin, left_slp_pin,
               left_pwm_timer]
 qtr_pins = [ir_1, ir_3, ir_5, ir_7, ir_9, ir_11, ir_13]
+
+"""Create motor objects to stop motors from initial movement."""
 
 right_motor = Motor([right_pwm_pin, right_dir_pin, right_slp_pin, right_pwm_timer], 4, [1, 0])
 left_motor = Motor([left_pwm_pin, left_dir_pin, left_slp_pin, left_pwm_timer], 1, [1, 0])
 right_motor.stop()
 left_motor.stop()
 
+"""Initialize i2c3"""
+
 i2c = I2C(3, I2C.CONTROLLER)  # Make sure you're using the correct I2C bus
 sleep(1)  # Allow devices to power up
+
+"""Bumper Interrupt Creation"""
 
 bumper_pin = Pin('B14', Pin.IN, Pin.PULL_UP)
 prev_bumper_state = False
@@ -90,6 +103,7 @@ def bumper_pushed(line):
 
 bumper_inter = ExtInt(bumper_pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, bumper_pushed)
 
+"""Create Sensor and Task Objects"""
 
 encoder = EncoderTask(enc_pins)
 motor = MotorTask(motor_pins[0:4], motor_pins[4:8], 4, 1, [.7, 0], [.9, 0])
@@ -100,9 +114,7 @@ imu = BNO055(i2c, 'A15')
 imu_more = HeadingTask(imu)
 
 if __name__ == '__main__':
-    """
-    Create shares, create tasks, append tasks
-    """
+    """Create shares"""
     right_pos = task_share.Share('f', name='Right Encoder Pos')
     left_pos = task_share.Share('f', name='Left Encoder Pos')
     right_vel = task_share.Share('f', name='Right Encoder Vel')
@@ -112,10 +124,11 @@ if __name__ == '__main__':
     left_speed = task_share.Share('h', name="Left speed")  # Input Speed for motor pwm [%]
     left_stop = task_share.Share('h', name="Left Stop")
     line_error = task_share.Share('f', name="Error")
-    heading = task_share.Share('f', name="Heading Error")
+    heading = task_share.Share('f', name="Heading")
     line_heading = task_share.Share('h', name="Line Switch")
-    heading_set = task_share.Share('f', name="Line Switch")
+    heading_set = task_share.Share('f', name="Heading Set")
 
+    """Create Tasks"""
     enc_task = cotask.Task(encoder.encoder_gen, name='Encoder Task', priority=1, period=1,
                            shares=([right_pos, right_vel, left_pos, left_vel]), trace=False, profile=True)
 
@@ -130,16 +143,20 @@ if __name__ == '__main__':
     imu_task = cotask.Task(imu_more.get_heading, name='IMU Task', priority=1, period=15, shares=heading, trace=False,
                            profile=True)
 
+    """Add Tasks to cotask task list"""
     cotask.task_list.append(enc_task)
     cotask.task_list.append(qtr_task)
     cotask.task_list.append(controller_task)
     cotask.task_list.append(motor_task)
     cotask.task_list.append(imu_task)
+
+    """Put motor in stopped mode"""
     right_speed.put(0)
     right_stop.put(1)
     left_speed.put(0)
     left_stop.put(1)
 
+    """Calibration (if needed)"""
     # print('place on white')
     # wait_for_button()
     # qtr.calibrate_white()
@@ -148,11 +165,16 @@ if __name__ == '__main__':
     # wait_for_button()
     # qtr.calibrate_black()
 
+    """Print timing initialization"""
     interval = 500
     begin_time = ticks_ms()
     deadline = ticks_add(begin_time, interval)
+
+    """Take motors out of stop mode"""
     right_stop.put(0)
     left_stop.put(0)
+
+    """Course State Machine Definitions"""
     state = 0
     S0_wait_to_start = 0
     S1_to_diamond = 1
@@ -169,11 +191,6 @@ if __name__ == '__main__':
     S12_turn_4 = 12
     S13_to_finish = 13
 
-    d_location = 1000
-    end_d_location = 1500
-    grid_location = 5000
-    turn_1_location = 5000
-    wall_location = 10000
     thresh = 0
     rep = 0
     heading_north = 0
@@ -191,13 +208,18 @@ if __name__ == '__main__':
                     f'Right_Pos- thresh: {right_pos.get() - thresh}, State: {state}, R_speed: {right_speed.get()}, Heading: {heading.get()}')
                 deadline = ticks_add(deadline, interval)
 
+            """Course State machine
+            
+            Hardcoded states based on encoder position and bumper state.
+            Jumps between line sensing and north sensing modes to complete the course.
+            """
+
             if state == S0_wait_to_start:
                 line_heading.put(4)
                 if button_state != prev_button_state:
                     prev_button_state = button_state
                     sleep(.2)
                     state = S1_to_diamond
-                # maybe clear everything
             elif button_state != prev_button_state:
                 prev_button_state = button_state
                 state = S0_wait_to_start
@@ -234,7 +256,7 @@ if __name__ == '__main__':
             if state == S3_to_grid:
                 line_heading.put(0)
                 if rep == 0:
-                    thresh = right_pos.get() + 18_000 - 2_000
+                    thresh = right_pos.get() + 16_000
                     rep += 1
                 if right_pos.get() > thresh:
                     state = S4_to_turn
