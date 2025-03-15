@@ -26,6 +26,7 @@ Components
      - A 13-channel array of IR LED/phototransistor pairs with 4mm length, used for precise line detection and following.
    * - `Gearmotor and Encoder Assembly for Romi/TI-RSLK MAX <https://www.pololu.com/product/3675>`_
      - 2
+     -  Gearmotors with encoders pre-installed, providing feedback for precise motor control
 
 
 Romi
