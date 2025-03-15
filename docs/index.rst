@@ -37,8 +37,8 @@ Successful Run
 After many many trials, debugging, reworking control methods, hardcoding distances, we were able to complete the course.
 
 .. youtube:: lIelwNlQIkY
-   :width: 500
-   :height: 300
+   :width: 510
+   :height: 907
 
 (Yes, we barely made it back on the pad but we are counting it :))
 
