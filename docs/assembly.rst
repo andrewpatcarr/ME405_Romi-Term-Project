@@ -4,10 +4,10 @@ Assembly
 Pinout
 ------
 
-.. image:: docs/Pinout1.png
+.. image:: Pinout1.png
    :alt: Pinout using our STM32 Nucleo Board
    :width: 600px
-.. image:: docs/Pinout2.png
+.. image:: Pinout2.png
    :alt: Pinout of components by color
    :width: 600px
 
