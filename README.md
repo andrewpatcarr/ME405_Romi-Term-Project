@@ -35,7 +35,7 @@ Romi has two DC motor driven wheels with quadrature encoders. We mounted an IMU 
 ### Programming
 
 // talk about code style (OOP, tasks, etc.)
-
+We structured our code using Object-Oriented Programming principles and use task based architecture for streamlined modifications and control. Each part of the robot runs as a seperate task, allowing for easy debugging and organization. Motor Control uses a PI controller to set motor speed based on encoder feedback. The encoder uses quadrature signals and an AR reset to prevent overflow. Our IR sensor uses a centroid based algorithm to track black lines for navigation.
 // talk briefly about some of the main files like PI control, IR sensor centroid stuff,
 encoder stuff(maybe the AR fixing), motor controlling
 
