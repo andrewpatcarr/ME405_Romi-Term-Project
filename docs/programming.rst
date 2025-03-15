@@ -69,7 +69,7 @@ Finite State Machines
 
 Each our tasks use generators written as finite state machines (FSM)
 
-.. image:: FSM.png
+.. image:: FSM.jpg
    :alt: Finite State Machine for final course
    :width: 400px
 
