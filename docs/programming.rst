@@ -69,7 +69,9 @@ Finite State Machines
 
 Each our tasks use generators written as finite state machines (FSM)
 
-// insert FSM diagrams
+.. image:: FSM.png
+   :alt: Finite State Machine for final course
+   :width: 400px
 
 In main, we use a FSM to complete the course. It features hardcoded encoder position thresholds which jump between
 line following, heading following and full reverse modes.
