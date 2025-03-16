@@ -70,7 +70,7 @@ Finite State Machines
 Each our tasks use generators written as finite state machines (FSM)
 Idk why but this FSM isnt updating from old jpg
 
-.. image:: FSM.jpg
+.. image:: _static/FSM.jpg
    :alt: Finite State Machine for final course
    :width: 400px
 
@@ -84,5 +84,17 @@ Course FSM
    :width: 800px
    :alt: course_state_machine
 
+Line Sensing Methods
+--------------------
+
+Our line sensor features an array of light sensor that all produce a reading that can be normalized to 0 to 1 with a
+1 being black. If the line is perfectly below the sensor, we get a 'normal' distribution with the middle sensors
+reporting a 1 while each sensor moving outwards has less black line under it. We use this theory to find the
+centroid of our sensor array which we can compare to the centroid of a perfectly centered line.
+
+.. math::
+    x = \frac{\sum_{i}q_i x_i}{\sum_{i}q_i}
+
+where  :math:`q_i` is the sensor value and :math:`x_i` is the sensor location
 
 

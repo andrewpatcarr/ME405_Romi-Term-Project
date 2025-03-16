@@ -258,9 +258,224 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-main">
-<span id="main"></span><h1>main<a class="headerlink" href="#module-main" title="Link to this heading">¶</a></h1>
-<dl class="py data">
+          <section id="main">
+<h1>main<a class="headerlink" href="#main" title="Link to this heading">¶</a></h1>
+<p>Our main program initializes all class objects, tasks and shares. It then runs the scheduler
+and jumps between states to complete the course.</p>
+<section id="course-finite-state-machine">
+<h2>Course Finite State Machine<a class="headerlink" href="#course-finite-state-machine" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Press button to start run&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">cotask</span><span class="o">.</span><span class="n">task_list</span><span class="o">.</span><span class="n">pri_sched</span><span class="p">()</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print Section&quot;&quot;&quot;</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">ticks_ms</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ticks_diff</span><span class="p">(</span><span class="n">deadline</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Right_Pos- thresh: </span><span class="si">{</span><span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">thresh</span><span class="si">}</span><span class="s1">, State: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1">, R_speed: </span><span class="si">{</span><span class="n">right_speed</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="si">}</span><span class="s1">, Heading: </span><span class="si">{</span><span class="n">heading</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">deadline</span> <span class="o">=</span> <span class="n">ticks_add</span><span class="p">(</span><span class="n">deadline</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Course State machine</span>
+
+<span class="sd">        Hardcoded states based on encoder position and bumper state.</span>
+<span class="sd">        Jumps between line sensing and north sensing modes to complete the course.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S0_wait_to_start</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">button_state</span> <span class="o">!=</span> <span class="n">prev_button_state</span><span class="p">:</span>
+                <span class="n">prev_button_state</span> <span class="o">=</span> <span class="n">button_state</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mf">.2</span><span class="p">)</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S1_to_diamond</span>
+        <span class="k">elif</span> <span class="n">button_state</span> <span class="o">!=</span> <span class="n">prev_button_state</span><span class="p">:</span>
+            <span class="n">prev_button_state</span> <span class="o">=</span> <span class="n">button_state</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">S0_wait_to_start</span>
+
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S1_to_diamond</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">thresh</span> <span class="o">=</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">5_500</span>
+                <span class="n">heading_north</span> <span class="o">=</span> <span class="p">(</span><span class="n">imu</span><span class="o">.</span><span class="n">read_heading</span><span class="p">()</span><span class="o">+</span><span class="mi">90</span><span class="p">)</span><span class="o">%</span><span class="mi">360</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Heading North: </span><span class="si">{</span><span class="n">heading_north</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S2_straightline_diamond</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S2_straightline_diamond</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span> <span class="o">+</span> <span class="mi">90</span>
+
+                <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+                <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+                <span class="n">thresh</span> <span class="o">=</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1_000</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Threshold: </span><span class="si">{</span><span class="n">thresh</span><span class="si">}</span><span class="s1">, hed_set: </span><span class="si">{</span><span class="n">hed_set</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S3_to_grid</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S3_to_grid</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">thresh</span> <span class="o">=</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">16_000</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S4_to_turn</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S4_to_turn</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">thresh</span> <span class="o">=</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">4_000</span>
+                <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span> <span class="o">-</span> <span class="mi">180</span>
+                <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+                <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S5_turn_1</span>
+                <span class="n">right_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">left_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S5_turn_1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span> <span class="o">-</span> <span class="mi">90</span>
+                <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+                <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+                <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="o">-</span><span class="mi">10</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">hed_set</span> <span class="o">-</span> <span class="n">heading</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="n">right_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">left_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S6_to_wall</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S6_to_wall</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">bumper_state</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bumper hit&#39;</span><span class="p">)</span>
+                <span class="n">right_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">left_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S7_reverse</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S7_reverse</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">thresh</span> <span class="o">=</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">-</span> <span class="mi">500</span>
+                <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span> <span class="o">-</span> <span class="mi">90</span>
+
+                <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;hed_set: </span><span class="si">{</span><span class="n">hed_set</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">thresh</span><span class="p">:</span>
+                <span class="n">right_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">left_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S8_turn_2</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S8_turn_2</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span>
+                <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+                <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+                <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="o">-</span><span class="mi">10</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">hed_set</span> <span class="o">-</span> <span class="n">heading</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="n">right_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">left_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S9_to_3</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S9_to_3</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">heading_north</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">thresh</span> <span class="o">=</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2_000</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S10_turn_3</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S10_turn_3</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span> <span class="o">-</span> <span class="mi">90</span>
+                <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+                <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+                <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="o">-</span><span class="mi">10</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">hed_set</span> <span class="o">-</span> <span class="n">heading</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="n">right_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">left_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S11_to_4</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S11_to_4</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span> <span class="o">-</span> <span class="mi">90</span>
+            <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+            <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+            <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">thresh</span> <span class="o">=</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2_000</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S12_turn_4</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S12_turn_4</span><span class="p">:</span>
+            <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span> <span class="o">-</span> <span class="mi">180</span>
+                <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+                <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+                <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="o">-</span><span class="mi">10</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">hed_set</span> <span class="o">-</span> <span class="n">heading</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="n">right_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">left_speed</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S13_to_finish</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">S13_to_finish</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">hed_set</span> <span class="o">=</span> <span class="n">heading_north</span> <span class="o">-</span> <span class="mi">180</span>
+                <span class="k">if</span> <span class="n">hed_set</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">+=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">hed_set</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="p">:</span>
+                    <span class="n">hed_set</span> <span class="o">-=</span> <span class="mi">360</span>
+                <span class="n">heading_set</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">hed_set</span><span class="p">)</span>
+                <span class="n">line_heading</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">thresh</span> <span class="o">=</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2_200</span>
+                <span class="n">rep</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">right_pos</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">S0_wait_to_start</span>
+                <span class="n">rep</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py data" id="module-main">
 <dt class="sig sig-object py" id="main.bumper_inter">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">bumper_inter</span></span><a class="headerlink" href="#main.bumper_inter" title="Link to this definition">¶</a></dt>
 <dd><p>Create Sensor and Task Objects</p>
@@ -269,12 +484,14 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="main.bumper_pushed">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">bumper_pushed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.bumper_pushed" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>A function for handling the bumper inputs</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="main.button_pushed">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">button_pushed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.button_pushed" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>A function for handling the user button inputs</p>
+</dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="main.ir_ctrl">
@@ -297,8 +514,10 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="main.wait_for_button">
 <span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">wait_for_button</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.wait_for_button" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>A blocking user input function used to do calibration and to start the course</p>
+</dd></dl>
 
+</section>
 </section>
 
         </article>
@@ -357,6 +576,7 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">main</a><ul>
+<li><a class="reference internal" href="#course-finite-state-machine">Course Finite State Machine</a><ul>
 <li><a class="reference internal" href="#main.bumper_inter"><code class="docutils literal notranslate"><span class="pre">bumper_inter</span></code></a></li>
 <li><a class="reference internal" href="#main.bumper_pushed"><code class="docutils literal notranslate"><span class="pre">bumper_pushed()</span></code></a></li>
 <li><a class="reference internal" href="#main.button_pushed"><code class="docutils literal notranslate"><span class="pre">button_pushed()</span></code></a></li>
@@ -364,6 +584,8 @@
 <li><a class="reference internal" href="#main.left_pwm_timer"><code class="docutils literal notranslate"><span class="pre">left_pwm_timer</span></code></a></li>
 <li><a class="reference internal" href="#main.qtr_pins"><code class="docutils literal notranslate"><span class="pre">qtr_pins</span></code></a></li>
 <li><a class="reference internal" href="#main.wait_for_button"><code class="docutils literal notranslate"><span class="pre">wait_for_button()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
