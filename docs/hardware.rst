@@ -48,6 +48,7 @@ can implement motion tracking and autonomous movement. The motor driver
 controls the voltage and current to each motor, allowing for bidirectional
 movement and speed control.
 
+// add motor classification stuff
 
 STM-32 Nucleo
 -------------
