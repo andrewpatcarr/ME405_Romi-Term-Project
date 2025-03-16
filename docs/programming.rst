@@ -97,4 +97,6 @@ centroid of our sensor array which we can compare to the centroid of a perfectly
 
 where  :math:`q_i` is the sensor value and :math:`x_i` is the sensor location
 
+This is sent to our controller which tells the motors what to do to realign the robot with line.
+
 
