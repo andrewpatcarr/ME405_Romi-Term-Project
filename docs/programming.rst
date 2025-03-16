@@ -13,7 +13,9 @@ when we get sensor readings, drive motors and use our controller. Shares allow u
 that different tasks can use and change. For example, our controller task can adjust the motor speed
 share which the motor task reads and uses to drive the motors to achieve a goal.
 
-// insert updated task diagram --> only include the tasks we are using in the final project
+.. image:: _static/Task Diagrams.jpg
+   :alt: Task Diagram for Task Scheduler
+   :width: 400px
 
 Shares
 ------
@@ -71,7 +73,11 @@ Each our tasks use generators written as finite state machines (FSM)
 Idk why but this FSM isnt updating from old jpg
 
 .. image:: _static/FSM.jpg
-   :alt: Finite State Machine for final course
+   :alt: Finite State Machine for main.py
+   :width: 400px
+
+.. image:: _static/FSMTASK.jpg
+   :alt: Finite State Machine for Task scheduler
    :width: 400px
 
 In main, we use a FSM to complete the course. It features hardcoded encoder position thresholds which jump between
