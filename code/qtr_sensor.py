@@ -18,6 +18,8 @@ class QTRSensor:
     Methods
     -------
 
+
+
     """
     def __init__(self, pins,ctrl):
         self.pins = [ADC(pin) for pin in pins]  # Create ADC objects for each pin

@@ -50,6 +50,7 @@ button_state = False
 
 
 def button_pushed():
+    """A function for handling the user button inputs"""
     global button_state
     button_state = not button_state
     sleep(.200)  # Debouncing delay
@@ -59,6 +60,7 @@ sw_1.callback(button_pushed)
 
 
 def wait_for_button():
+    """A blocking user input function used to do calibration and to start the course"""
     global button_state, prev_button_state
     while True:
         if button_state != prev_button_state:
@@ -94,6 +96,7 @@ debounce_delay = 50  # Debounce delay in milliseconds
 
 
 def bumper_pushed(line):
+    """A function for handling the bumper inputs"""
     global bumper_state, last_interrupt_time
     current_time = millis()  # Get current time in ms
     if (current_time - last_interrupt_time) > debounce_delay:  # Check debounce

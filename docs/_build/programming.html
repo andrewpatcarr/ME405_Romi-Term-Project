@@ -342,8 +342,10 @@ share which the motor task reads and uses to drive the motors to achieve a goal.
 </section>
 <section id="finite-state-machines">
 <h2>Finite State Machines<a class="headerlink" href="#finite-state-machines" title="Link to this heading">¶</a></h2>
-<p>Each our tasks use generators written as finite state machines (FSM)</p>
-<p>// insert FSM diagrams</p>
+<p>Each our tasks use generators written as finite state machines (FSM)
+Idk why but this FSM isnt updating from old jpg</p>
+<a class="reference internal image-reference" href="_images/FSM.jpg"><img alt="Finite State Machine for final course" src="_images/FSM.jpg" style="width: 400px;" />
+</a>
 <p>In main, we use a FSM to complete the course. It features hardcoded encoder position thresholds which jump between
 line following, heading following and full reverse modes.</p>
 </section>
@@ -351,6 +353,18 @@ line following, heading following and full reverse modes.</p>
 <h2>Course FSM<a class="headerlink" href="#course-fsm" title="Link to this heading">¶</a></h2>
 <a class="reference internal image-reference" href="_images/course_state_machine.png"><img alt="course_state_machine" src="_images/course_state_machine.png" style="width: 800px;" />
 </a>
+</section>
+<section id="line-sensing-methods">
+<h2>Line Sensing Methods<a class="headerlink" href="#line-sensing-methods" title="Link to this heading">¶</a></h2>
+<p>Our line sensor features an array of light sensor that all produce a reading that can be normalized to 0 to 1 with a
+1 being black. If the line is perfectly below the sensor, we get a ‘normal’ distribution with the middle sensors
+reporting a 1 while each sensor moving outwards has less black line under it. We use this theory to find the
+centroid of our sensor array which we can compare to the centroid of a perfectly centered line.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[x = \frac{\sum_{i}q_i x_i}{\sum_{i}q_i}\]</div>
+</div>
+<p>where  <span class="math notranslate nohighlight">\(q_i\)</span> is the sensor value and <span class="math notranslate nohighlight">\(x_i\)</span> is the sensor location</p>
 </section>
 </section>
 
@@ -414,6 +428,7 @@ line following, heading following and full reverse modes.</p>
 <li><a class="reference internal" href="#shares">Shares</a></li>
 <li><a class="reference internal" href="#finite-state-machines">Finite State Machines</a></li>
 <li><a class="reference internal" href="#course-fsm">Course FSM</a></li>
+<li><a class="reference internal" href="#line-sensing-methods">Line Sensing Methods</a></li>
 </ul>
 </li>
 </ul>
@@ -429,5 +444,6 @@ line following, heading following and full reverse modes.</p>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

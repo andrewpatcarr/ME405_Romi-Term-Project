@@ -80,7 +80,7 @@ and any environmental disturbances. We use I2C to communicate between our microc
    :width: 600px
    :alt: IMU
 
-Photo used from `adafruit.com <https://learn.adafruit.com/assets/24585>`_.
+Image used from `adafruit.com <https://learn.adafruit.com/assets/24585>`_.
 
 Bump Sensor
 -----------
