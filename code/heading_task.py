@@ -46,7 +46,7 @@ class HeadingTask:
 
         Parameters
         ----------
-        shares : task_share.Share
+        shares : heading
             A shared variable to store the heading data.
 
         Yield
