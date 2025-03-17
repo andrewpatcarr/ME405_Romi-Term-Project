@@ -264,10 +264,78 @@
 <dt class="sig sig-object py" id="heading_task.HeadingTask">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">heading_task.</span></span><span class="sig-name descname"><span class="pre">HeadingTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imu</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heading_task.HeadingTask" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to handle reading the heading from an IMU and updating shared variables.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="heading_task.HeadingTask.imu">
+<span class="sig-name descname"><span class="pre">imu</span></span><a class="headerlink" href="#heading_task.HeadingTask.imu" title="Link to this definition">¶</a></dt>
+<dd><p>The IMU sensor instance used for reading heading data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="heading_task.HeadingTask.S0_init">
+<span class="sig-name descname"><span class="pre">S0_init</span></span><a class="headerlink" href="#heading_task.HeadingTask.S0_init" title="Link to this definition">¶</a></dt>
+<dd><p>The initialization state value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="heading_task.HeadingTask.S1_read">
+<span class="sig-name descname"><span class="pre">S1_read</span></span><a class="headerlink" href="#heading_task.HeadingTask.S1_read" title="Link to this definition">¶</a></dt>
+<dd><p>The read state value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="heading_task.HeadingTask.state">
+<span class="sig-name descname"><span class="pre">state</span></span><a class="headerlink" href="#heading_task.HeadingTask.state" title="Link to this definition">¶</a></dt>
+<dd><p>The current state value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="heading_task.HeadingTask.target_heading">
+<span class="sig-name descname"><span class="pre">target_heading</span></span><a class="headerlink" href="#heading_task.HeadingTask.target_heading" title="Link to this definition">¶</a></dt>
+<dd><p>The desired target heading value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="heading_task.HeadingTask.get_heading">
 <span class="sig-name descname"><span class="pre">get_heading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shares</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heading_task.HeadingTask.get_heading" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The generator that implements the finite state machine for the Heading task.</p>
+<p>State 0 initializes the IMU sensor to heading mode and transitions to state 1.
+State 1 reads the heading from the IMU, adjusts it within the 0-360° range,
+and updates the shared variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shares</strong> (<em>heading</em>) – A shared variable to store the heading data.</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>int</em> – The value of the current state within the machine.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -330,6 +398,11 @@
             <ul>
 <li><a class="reference internal" href="#">heading_task</a><ul>
 <li><a class="reference internal" href="#heading_task.HeadingTask"><code class="docutils literal notranslate"><span class="pre">HeadingTask</span></code></a><ul>
+<li><a class="reference internal" href="#heading_task.HeadingTask.imu"><code class="docutils literal notranslate"><span class="pre">HeadingTask.imu</span></code></a></li>
+<li><a class="reference internal" href="#heading_task.HeadingTask.S0_init"><code class="docutils literal notranslate"><span class="pre">HeadingTask.S0_init</span></code></a></li>
+<li><a class="reference internal" href="#heading_task.HeadingTask.S1_read"><code class="docutils literal notranslate"><span class="pre">HeadingTask.S1_read</span></code></a></li>
+<li><a class="reference internal" href="#heading_task.HeadingTask.state"><code class="docutils literal notranslate"><span class="pre">HeadingTask.state</span></code></a></li>
+<li><a class="reference internal" href="#heading_task.HeadingTask.target_heading"><code class="docutils literal notranslate"><span class="pre">HeadingTask.target_heading</span></code></a></li>
 <li><a class="reference internal" href="#heading_task.HeadingTask.get_heading"><code class="docutils literal notranslate"><span class="pre">HeadingTask.get_heading()</span></code></a></li>
 </ul>
 </li>

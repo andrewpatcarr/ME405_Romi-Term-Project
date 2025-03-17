@@ -15,21 +15,6 @@ class QTRSensor:
         calibration readings for white background.
     black : list
         calibration readings for black background.
-
-    Methods
-    -------
-    readIR()
-        Read QTR sensors, normalize, and compute centroid.
-    readRaw
-        Read raw sensor values from QTR sensors.
-    centroid()
-        Return the current computed centroid value.
-    calibrate_white()
-        Read raw sensor values and set white calibration values.
-    calibrate_black()
-        Read raw sensor values and set black calibration values.
-
-
     """
     def __init__(self, pins,ctrl):
         self.pins = [ADC(pin) for pin in pins]  # Create ADC objects for each pin
@@ -62,6 +47,7 @@ class QTRSensor:
         self.control.low()
 
     def readRaw(self):
+        """Read raw sensor values from QTR sensors."""
         self.control.high()
         sleep(0.0001)
         vals = [pin.read() for pin in self.pins]
