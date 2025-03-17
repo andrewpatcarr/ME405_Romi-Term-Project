@@ -31,6 +31,9 @@ Our Pololu Romi has a STM-32 Nucleo with a Calpoly custom 'Shoe of Brian' along 
 Romi has two DC motor driven wheels with quadrature encoders. We mounted an IMU for orientation sensing, 
 an IR sensor to track a black line, and a bump sensor for impact sensing.
 
+See cad and pinout folders for files and the [hardware](https://andrewpatcarr.github.io/ME405_Romi-Term-Project/hardware.html)
+and [assembly](https://andrewpatcarr.github.io/ME405_Romi-Term-Project/assembly.html) pages for documentation.
+
 ### Programming
 
 We structured our code using object-oriented programming principles and task-based architecture for
@@ -39,5 +42,7 @@ debugging and organization. We use a PI controller to set motor speed based on e
 The encoder uses quadrature signals and an AR reset to prevent overflow. Our IR sensor uses a centroid-based 
 algorithm to track black lines for navigation.
 
-
+See the source code in the code folder and the [programming](https://andrewpatcarr.github.io/ME405_Romi-Term-Project/programming.html),
+[control](https://andrewpatcarr.github.io/ME405_Romi-Term-Project/control_scheme.html), and
+[code modules](https://andrewpatcarr.github.io/ME405_Romi-Term-Project/code_rst/modules.html) pages for detailed documentation.
 
