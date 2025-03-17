@@ -13,6 +13,6 @@ Pinout
 .. image:: _static/Pinout2.png
    :alt: Pinout of components by color
    :width: 600px
-
+These are the pinouts pertaining to the components and STM32 Nucleo Board.
 
 
