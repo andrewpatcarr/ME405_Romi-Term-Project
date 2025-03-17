@@ -61,7 +61,7 @@ class EncoderTask:
 
         Parameters
         ----------
-        shares : list
+        shares : list[right_pos, right_vel, left_pos, left_vel]
             Shared values for position and velocity for each wheel.
 
         Yields
