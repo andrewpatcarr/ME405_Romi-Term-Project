@@ -42,7 +42,7 @@ After many many trials, debugging, reworking control methods, hardcoding distanc
 
 (Yes, we barely made it back on the pad but we are counting it :))
 
-In this documentation, we will talk about the hardware and software of Romi. There is documentation regarding how our programs,
+In this documentation, we will talk about the hardware and software used in our Romi. There is documentation regarding how our programs,
 the drivers we created for each component, and the controllers we implemented.
 
 Contents

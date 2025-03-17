@@ -320,7 +320,54 @@ encoders connected to the motors allow for a closed feedback loop, so we
 can implement motion tracking and autonomous movement. The motor driver
 controls the voltage and current to each motor, allowing for bidirectional
 movement and speed control.</p>
-<p>// add motor classification stuff</p>
+<p>To help control each motor, we ran step input tests to find different characteristics of the motors.</p>
+</section>
+<section id="example-plots-right-motor">
+<h2>Example Plots (Right Motor)<a class="headerlink" href="#example-plots-right-motor" title="Link to this heading">¶</a></h2>
+<p>Position vs Time at different open loop step inputs</p>
+<a class="reference internal image-reference" href="_images/pos_time_right.png"><img alt="pos_time_right" src="_images/pos_time_right.png" style="width: 600px;" />
+</a>
+<p>Velocity vs Time at different open loop step inputs</p>
+<a class="reference internal image-reference" href="_images/velocity_time.png"><img alt="velocity_time" src="_images/velocity_time.png" style="width: 600px;" />
+</a>
+<p>Steady-State Velocity vs Input Voltage</p>
+<a class="reference internal image-reference" href="_images/ss_inputvolt.png"><img alt="ss_inputvolt" src="_images/ss_inputvolt.png" style="width: 600px;" />
+</a>
+<p>Linearized Velocity vs Time (inverse of slope gives time constant)</p>
+<a class="reference internal image-reference" href="_images/linearized_time.png"><img alt="linearized_time" src="_images/linearized_time.png" style="width: 600px;" />
+</a>
+</section>
+<section id="motor-parameters">
+<h2>Motor Parameters<a class="headerlink" href="#motor-parameters" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.4%" />
+<col style="width: 30.8%" />
+<col style="width: 23.1%" />
+<col style="width: 30.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Motor</p></th>
+<th class="head"><p>Time Constant [ms]</p></th>
+<th class="head"><p>Gain [deg/s]</p></th>
+<th class="head"><p>Startup PWM %</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Right</p></td>
+<td><p>158</p></td>
+<td><p>56.7</p></td>
+<td><p>2.77</p></td>
+</tr>
+<tr class="row-odd"><td><p>Left</p></td>
+<td><p>170</p></td>
+<td><p>60.3</p></td>
+<td><p>6.48</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="stm-32-nucleo">
 <h2>STM-32 Nucleo<a class="headerlink" href="#stm-32-nucleo" title="Link to this heading">¶</a></h2>
@@ -332,8 +379,8 @@ integration and motor control through MicroPython.</p>
 <section id="qtr-sensor">
 <h2>QTR Sensor<a class="headerlink" href="#qtr-sensor" title="Link to this heading">¶</a></h2>
 <p>The QTR sensor has an array of infrared reflectance sensor for line following, consisting of an IR LED
-and phototransistor to detect reflectance of the surface it is pointed at. White surfaces return high readings,
-while black surfaces return low readings. This sensor helps ROMI implement PID line following, adjusting motor
+and phototransistor to detect reflectance of the surface it is pointed at. White surfaces return low readings,
+while black surfaces return high readings. This sensor helps ROMI implement PID line following, adjusting motor
 speeds based on intensity of reflected light to the sensor.</p>
 <a class="reference internal image-reference" href="_images/qtr_pic.jpg"><img alt="QTR Sensor" src="_images/qtr_pic.jpg" style="width: 600px;" />
 </a>
@@ -421,6 +468,8 @@ the wall. This adds another sense to our robot which is essential to navigate th
 <li><a class="reference internal" href="#">Hardware</a><ul>
 <li><a class="reference internal" href="#components">Components</a></li>
 <li><a class="reference internal" href="#romi">Romi</a></li>
+<li><a class="reference internal" href="#example-plots-right-motor">Example Plots (Right Motor)</a></li>
+<li><a class="reference internal" href="#motor-parameters">Motor Parameters</a></li>
 <li><a class="reference internal" href="#stm-32-nucleo">STM-32 Nucleo</a></li>
 <li><a class="reference internal" href="#qtr-sensor">QTR Sensor</a></li>
 <li><a class="reference internal" href="#imu">IMU</a></li>
