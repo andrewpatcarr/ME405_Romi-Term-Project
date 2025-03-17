@@ -78,7 +78,7 @@ class ControlTask:
 
         Parameters
         ----------
-        shares : list[SharedVariable]
+        shares : list[line_error, right_speed, left_speed, line_heading, heading, heading_set]
             Shared variables for error, right motor speed, and left motor speed.
 
         Yields
