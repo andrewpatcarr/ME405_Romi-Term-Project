@@ -13,7 +13,9 @@ when we get sensor readings, drive motors and use our controller. Shares allow u
 that different tasks can use and change. For example, our controller task can adjust the motor speed
 share which the motor task reads and uses to drive the motors to achieve a goal.
 
-// insert updated task diagram --> only include the tasks we are using in the final project
+.. image:: _static/Task Diagrams.jpg
+   :alt: Task Diagram for Task Scheduler
+   :width: 600px
 
 Shares
 ------
@@ -71,8 +73,13 @@ Each our tasks use generators written as finite state machines (FSM)
 Idk why but this FSM isnt updating from old jpg
 
 .. image:: _static/FSM.jpg
-   :alt: Finite State Machine for final course
+   :alt: Finite State Machine for main.py
    :width: 400px
+
+
+.. image:: _static/FSMTASK.jpg
+   :alt: Finite State Machine for Task scheduler
+   :width: 600px
 
 In main, we use a FSM to complete the course. It features hardcoded encoder position thresholds which jump between
 line following, heading following and full reverse modes.
@@ -92,11 +99,11 @@ Our line sensor features an array of light sensor that all produce a reading tha
 reporting a 1 while each sensor moving outwards has less black line under it. We use this theory to find the
 centroid of our sensor array which we can compare to the centroid of a perfectly centered line.
 
-
-
 .. math::
     x = \frac{\sum_{i}q_i x_i}{\sum_{i}q_i}
 
 where  :math:`q_i` is the sensor value and :math:`x_i` is the sensor location
+
+This is sent to our controller which tells the motors what to do to realign the robot with line.
 
 

@@ -48,6 +48,54 @@ can implement motion tracking and autonomous movement. The motor driver
 controls the voltage and current to each motor, allowing for bidirectional
 movement and speed control.
 
+To help control each motor, we ran step input tests to find different characteristics of the motors.
+
+Example Plots (Right Motor)
+---------------------------
+
+Position vs Time at different open loop step inputs
+
+.. image:: _static/pos_time_right.png
+   :width: 600px
+   :alt: pos_time_right
+
+Velocity vs Time at different open loop step inputs
+
+.. image:: _static/velocity_time.png
+   :width: 600px
+   :alt: velocity_time
+
+Steady-State Velocity vs Input Voltage
+
+.. image:: _static/ss_inputvolt.png
+   :width: 600px
+   :alt: ss_inputvolt
+
+Linearized Velocity vs Time (inverse of slope gives time constant)
+
+.. image:: _static/linearized_time.png
+   :width: 600px
+   :alt: linearized_time
+
+Motor Parameters
+----------------
+
+.. list-table::
+   :widths: 20 40 30 40
+   :header-rows: 1
+
+   * - Motor
+     - Time Constant [ms]
+     - Gain [deg/s]
+     - Startup PWM %
+   * - Right
+     - 158
+     - 56.7
+     - 2.77
+   * - Left
+     - 170
+     - 60.3
+     - 6.48
 
 STM-32 Nucleo
 -------------
@@ -59,8 +107,8 @@ integration and motor control through MicroPython.
 QTR Sensor
 ----------
 The QTR sensor has an array of infrared reflectance sensor for line following, consisting of an IR LED
-and phototransistor to detect reflectance of the surface it is pointed at. White surfaces return high readings,
-while black surfaces return low readings. This sensor helps ROMI implement PID line following, adjusting motor
+and phototransistor to detect reflectance of the surface it is pointed at. White surfaces return low readings,
+while black surfaces return high readings. This sensor helps ROMI implement PID line following, adjusting motor
 speeds based on intensity of reflected light to the sensor.
 
 .. image:: _static/qtr_pic.jpg
