@@ -9,10 +9,10 @@ Pinout
 
 .. image:: _static/Pinout1.png
    :alt: Pinout using our STM32 Nucleo Board
-   :width: 600px
+   :width: 800px
 .. image:: _static/Pinout2.png
    :alt: Pinout of components by color
-   :width: 600px
+   :width: 800px
 
 These are the pinouts pertaining to the components and STM32 Nucleo Board.
 
