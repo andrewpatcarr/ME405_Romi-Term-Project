@@ -310,33 +310,63 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qtr_sensor.QTRSensor.calibrate_black">
-<span class="sig-name descname"><span class="pre">calibrate_black</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRSensor.calibrate_black" title="Link to this definition">¶</a></dt>
-<dd><p>Calibrates IR sensor
-Sets white and black set-points for readings</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtr_sensor.QTRSensor.calibrate_white">
-<span class="sig-name descname"><span class="pre">calibrate_white</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRSensor.calibrate_white" title="Link to this definition">¶</a></dt>
-<dd><p>Calibrates IR sensor
-Sets white and black set-points for readings</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qtr_sensor.QTRSensor.centroid">
-<span class="sig-name descname"><span class="pre">centroid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRSensor.centroid" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="qtr_sensor.QTRSensor.readIR">
 <span class="sig-name descname"><span class="pre">readIR</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRSensor.readIR" title="Link to this definition">¶</a></dt>
-<dd><p>Reads all 7 Ir sensors and computes the centroid</p>
+<dd><p>Read QTR sensors, normalize, and compute centroid.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qtr_sensor.QTRSensor.readRaw">
 <span class="sig-name descname"><span class="pre">readRaw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRSensor.readRaw" title="Link to this definition">¶</a></dt>
+<dd><p>Read raw sensor values from QTR sensors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtr_sensor.QTRSensor.centroid">
+<span class="sig-name descname"><span class="pre">centroid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRSensor.centroid" title="Link to this definition">¶</a></dt>
+<dd><p>Return the current computed centroid value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtr_sensor.QTRSensor.calibrate_white">
+<span class="sig-name descname"><span class="pre">calibrate_white</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRSensor.calibrate_white" title="Link to this definition">¶</a></dt>
+<dd><p>Read raw sensor values and set white calibration values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qtr_sensor.QTRSensor.calibrate_black">
+<span class="sig-name descname"><span class="pre">calibrate_black</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRSensor.calibrate_black" title="Link to this definition">¶</a></dt>
+<dd><p>Read raw sensor values and set black calibration values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">calibrate_black</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Calibrates IR sensor
+Sets white and black set-points for readings</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">calibrate_white</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd><p>Calibrates IR sensor
+Sets white and black set-points for readings</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">centroid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">readIR</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<dd><p>Reads all 7 Ir sensors and computes the centroid</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">readRaw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -345,10 +375,66 @@ Sets white and black set-points for readings</p>
 <dt class="sig sig-object py" id="qtr_sensor.QTRTask">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qtr_sensor.</span></span><span class="sig-name descname"><span class="pre">QTRTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qtr_array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRTask" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to handle QTR Reflectance Array Sensors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtr_sensor.QTRTask.qtr_array">
+<span class="sig-name descname"><span class="pre">qtr_array</span></span><a class="headerlink" href="#qtr_sensor.QTRTask.qtr_array" title="Link to this definition">¶</a></dt>
+<dd><p>Normalized sensor readings for each sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtr_sensor.QTRTask.S0_init">
+<span class="sig-name descname"><span class="pre">S0_init</span></span><a class="headerlink" href="#qtr_sensor.QTRTask.S0_init" title="Link to this definition">¶</a></dt>
+<dd><p>State 0 value for initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtr_sensor.QTRTask.S1_read">
+<span class="sig-name descname"><span class="pre">S1_read</span></span><a class="headerlink" href="#qtr_sensor.QTRTask.S1_read" title="Link to this definition">¶</a></dt>
+<dd><p>State 1 value for reading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qtr_sensor.QTRTask.state">
+<span class="sig-name descname"><span class="pre">state</span></span><a class="headerlink" href="#qtr_sensor.QTRTask.state" title="Link to this definition">¶</a></dt>
+<dd><p>State of the FSM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="qtr_sensor.QTRTask.get_line">
 <span class="sig-name descname"><span class="pre">get_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shares</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qtr_sensor.QTRTask.get_line" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The generator that implements teh FSM for the QTR task.</p>
+<p>State 0 initializes the generator. State 1 reads the sensor and computes the
+centroid which corresponds to the current error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shares</strong> (<em>int</em>) – Line error shared variable for controller.</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> (<em>int</em>) – The value of the current state within the machine</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -415,14 +501,23 @@ Sets white and black set-points for readings</p>
 <li><a class="reference internal" href="#qtr_sensor.QTRSensor.control"><code class="docutils literal notranslate"><span class="pre">QTRSensor.control</span></code></a></li>
 <li><a class="reference internal" href="#qtr_sensor.QTRSensor.white"><code class="docutils literal notranslate"><span class="pre">QTRSensor.white</span></code></a></li>
 <li><a class="reference internal" href="#qtr_sensor.QTRSensor.black"><code class="docutils literal notranslate"><span class="pre">QTRSensor.black</span></code></a></li>
-<li><a class="reference internal" href="#qtr_sensor.QTRSensor.calibrate_black"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_black()</span></code></a></li>
-<li><a class="reference internal" href="#qtr_sensor.QTRSensor.calibrate_white"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_white()</span></code></a></li>
-<li><a class="reference internal" href="#qtr_sensor.QTRSensor.centroid"><code class="docutils literal notranslate"><span class="pre">QTRSensor.centroid()</span></code></a></li>
 <li><a class="reference internal" href="#qtr_sensor.QTRSensor.readIR"><code class="docutils literal notranslate"><span class="pre">QTRSensor.readIR()</span></code></a></li>
 <li><a class="reference internal" href="#qtr_sensor.QTRSensor.readRaw"><code class="docutils literal notranslate"><span class="pre">QTRSensor.readRaw()</span></code></a></li>
+<li><a class="reference internal" href="#qtr_sensor.QTRSensor.centroid"><code class="docutils literal notranslate"><span class="pre">QTRSensor.centroid()</span></code></a></li>
+<li><a class="reference internal" href="#qtr_sensor.QTRSensor.calibrate_white"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_white()</span></code></a></li>
+<li><a class="reference internal" href="#qtr_sensor.QTRSensor.calibrate_black"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_black()</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_black()</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_white()</span></code></a></li>
+<li><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">QTRSensor.centroid()</span></code></a></li>
+<li><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">QTRSensor.readIR()</span></code></a></li>
+<li><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">QTRSensor.readRaw()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#qtr_sensor.QTRTask"><code class="docutils literal notranslate"><span class="pre">QTRTask</span></code></a><ul>
+<li><a class="reference internal" href="#qtr_sensor.QTRTask.qtr_array"><code class="docutils literal notranslate"><span class="pre">QTRTask.qtr_array</span></code></a></li>
+<li><a class="reference internal" href="#qtr_sensor.QTRTask.S0_init"><code class="docutils literal notranslate"><span class="pre">QTRTask.S0_init</span></code></a></li>
+<li><a class="reference internal" href="#qtr_sensor.QTRTask.S1_read"><code class="docutils literal notranslate"><span class="pre">QTRTask.S1_read</span></code></a></li>
+<li><a class="reference internal" href="#qtr_sensor.QTRTask.state"><code class="docutils literal notranslate"><span class="pre">QTRTask.state</span></code></a></li>
 <li><a class="reference internal" href="#qtr_sensor.QTRTask.get_line"><code class="docutils literal notranslate"><span class="pre">QTRTask.get_line()</span></code></a></li>
 </ul>
 </li>

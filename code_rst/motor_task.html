@@ -337,7 +337,10 @@
 <dd><p>Controls motor speed and direction based on shared queue values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>shares</strong> – A tuple containing queues for right/left motor speed, stopping states, and velocity feedback.</p>
+<dd class="field-odd"><p><strong>shares</strong> (<em>list</em>) – A tuple containing queues for right/left motor speed, stopping states, and velocity feedback.</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> (<em>int</em>) – The value of the current state within the machine</p>
 </dd>
 </dl>
 </dd></dl>

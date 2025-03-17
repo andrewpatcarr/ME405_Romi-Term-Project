@@ -294,8 +294,8 @@
 <li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.now"><code class="docutils literal notranslate"><span class="pre">ControlTask.now</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.prev_time"><code class="docutils literal notranslate"><span class="pre">ControlTask.prev_time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.del_time"><code class="docutils literal notranslate"><span class="pre">ControlTask.del_time</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.left_base"><code class="docutils literal notranslate"><span class="pre">ControlTask.left_base</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.right_base"><code class="docutils literal notranslate"><span class="pre">ControlTask.right_base</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.base_speed"><code class="docutils literal notranslate"><span class="pre">ControlTask.base_speed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.speed"><code class="docutils literal notranslate"><span class="pre">ControlTask.speed</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.left_output"><code class="docutils literal notranslate"><span class="pre">ControlTask.left_output</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.right_output"><code class="docutils literal notranslate"><span class="pre">ControlTask.right_output</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control_task.html#control_task.ControlTask.controller"><code class="docutils literal notranslate"><span class="pre">ControlTask.controller()</span></code></a></li>
@@ -432,14 +432,23 @@
 <li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.control"><code class="docutils literal notranslate"><span class="pre">QTRSensor.control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.white"><code class="docutils literal notranslate"><span class="pre">QTRSensor.white</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.black"><code class="docutils literal notranslate"><span class="pre">QTRSensor.black</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.calibrate_black"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_black()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.calibrate_white"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_white()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.centroid"><code class="docutils literal notranslate"><span class="pre">QTRSensor.centroid()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.readIR"><code class="docutils literal notranslate"><span class="pre">QTRSensor.readIR()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.readRaw"><code class="docutils literal notranslate"><span class="pre">QTRSensor.readRaw()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.centroid"><code class="docutils literal notranslate"><span class="pre">QTRSensor.centroid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.calibrate_white"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_white()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRSensor.calibrate_black"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_black()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#id0"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_black()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#id1"><code class="docutils literal notranslate"><span class="pre">QTRSensor.calibrate_white()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#id2"><code class="docutils literal notranslate"><span class="pre">QTRSensor.centroid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#id3"><code class="docutils literal notranslate"><span class="pre">QTRSensor.readIR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#id4"><code class="docutils literal notranslate"><span class="pre">QTRSensor.readRaw()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRTask"><code class="docutils literal notranslate"><span class="pre">QTRTask</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRTask.qtr_array"><code class="docutils literal notranslate"><span class="pre">QTRTask.qtr_array</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRTask.S0_init"><code class="docutils literal notranslate"><span class="pre">QTRTask.S0_init</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRTask.S1_read"><code class="docutils literal notranslate"><span class="pre">QTRTask.S1_read</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRTask.state"><code class="docutils literal notranslate"><span class="pre">QTRTask.state</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="qtr_sensor.html#qtr_sensor.QTRTask.get_line"><code class="docutils literal notranslate"><span class="pre">QTRTask.get_line()</span></code></a></li>
 </ul>
 </li>

@@ -365,9 +365,9 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="control_task.ControlTask.left_base">
-<span class="sig-name descname"><span class="pre">left_base</span></span><a class="headerlink" href="#control_task.ControlTask.left_base" title="Link to this definition">¶</a></dt>
-<dd><p>Base speed for left motor.</p>
+<dt class="sig sig-object py" id="control_task.ControlTask.base_speed">
+<span class="sig-name descname"><span class="pre">base_speed</span></span><a class="headerlink" href="#control_task.ControlTask.base_speed" title="Link to this definition">¶</a></dt>
+<dd><p>Base speed for each motor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -376,9 +376,9 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="control_task.ControlTask.right_base">
-<span class="sig-name descname"><span class="pre">right_base</span></span><a class="headerlink" href="#control_task.ControlTask.right_base" title="Link to this definition">¶</a></dt>
-<dd><p>Base speed for right motor.</p>
+<dt class="sig sig-object py" id="control_task.ControlTask.speed">
+<span class="sig-name descname"><span class="pre">speed</span></span><a class="headerlink" href="#control_task.ControlTask.speed" title="Link to this definition">¶</a></dt>
+<dd><p>Speed used for control commands that can be positive or negative.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -494,8 +494,8 @@ State 1: Reads the error, applies PID corrections, and updates motor speeds.</p>
 <li><a class="reference internal" href="#control_task.ControlTask.now"><code class="docutils literal notranslate"><span class="pre">ControlTask.now</span></code></a></li>
 <li><a class="reference internal" href="#control_task.ControlTask.prev_time"><code class="docutils literal notranslate"><span class="pre">ControlTask.prev_time</span></code></a></li>
 <li><a class="reference internal" href="#control_task.ControlTask.del_time"><code class="docutils literal notranslate"><span class="pre">ControlTask.del_time</span></code></a></li>
-<li><a class="reference internal" href="#control_task.ControlTask.left_base"><code class="docutils literal notranslate"><span class="pre">ControlTask.left_base</span></code></a></li>
-<li><a class="reference internal" href="#control_task.ControlTask.right_base"><code class="docutils literal notranslate"><span class="pre">ControlTask.right_base</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.base_speed"><code class="docutils literal notranslate"><span class="pre">ControlTask.base_speed</span></code></a></li>
+<li><a class="reference internal" href="#control_task.ControlTask.speed"><code class="docutils literal notranslate"><span class="pre">ControlTask.speed</span></code></a></li>
 <li><a class="reference internal" href="#control_task.ControlTask.left_output"><code class="docutils literal notranslate"><span class="pre">ControlTask.left_output</span></code></a></li>
 <li><a class="reference internal" href="#control_task.ControlTask.right_output"><code class="docutils literal notranslate"><span class="pre">ControlTask.right_output</span></code></a></li>
 <li><a class="reference internal" href="#control_task.ControlTask.controller"><code class="docutils literal notranslate"><span class="pre">ControlTask.controller()</span></code></a></li>
