@@ -24,14 +24,15 @@ class ControlTask:
         Previous timestamp (milliseconds).
     del_time : int
         Time difference between control updates.
-    left_base : int
-        Base speed for left motor.
-    right_base : int
-        Base speed for right motor.
+    base_speed : int
+        Base speed for each motor.
+    speed : int
+        Speed used for control commands that can be positive or negative.
     left_output : int
         Output speed for left motor.
     right_output : int
         Output speed for right motor.
+
     """
     
     def __init__(self, gains, offset):
@@ -66,8 +67,6 @@ class ControlTask:
         self.speed = 0
         self.left_output = 0
         self.right_output = 0
-        self.stepper = 0
-        self.heading_set = 0
 
     def controller(self, shares):
         """

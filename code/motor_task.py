@@ -46,9 +46,18 @@ class MotorTask:
     def go(self, shares):
         """
         Controls motor speed and direction based on shared queue values.
-        
-        :param shares: A tuple containing queues for right/left motor speed, stopping states, and velocity feedback.
+
+        Parameters
+        ----------
+        shares : list
+            A tuple containing queues for right/left motor speed, stopping states, and velocity feedback.
+
+        Yields
+        ------
+        state : int
+            The value of the current state within the machine
         """
+
         right_speed, left_speed, right_stop, left_stop, right_vel, left_vel = shares
 
         while True:
