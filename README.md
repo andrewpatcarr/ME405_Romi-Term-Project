@@ -20,23 +20,23 @@ All of these labs were building towards our term project/challenge.
 
 <img src="docs/_static/romi_pic_cropped.png" alt="romi_pic" width="800">
 
-We were tasked with completing a complex track with obstacles, quick bends and varying surface prints. 
+We were tasked with completing a complex track with obstacles, quick bends, and varying surface prints. 
 
 <img src="docs/_static/game_track.png" alt="Game Track" width="800">
 
 ### Hardware
 
-Our Pololu Romi has a STM-32 Nucleo with a Calpoly custom 'Shoe of Brian' along with a Polou motor driver.
+Our Pololu Romi has a STM-32 Nucleo with a Calpoly custom 'Shoe of Brian' along with a Pololu motor driver.
 
 Romi has two DC motor driven wheels with quadrature encoders. We mounted an IMU for orientation sensing, 
 an IR sensor to track a black line, and a bump sensor for impact sensing.
 
 ### Programming
 
-We structured our code using Object-Oriented Programming principles and use task based architecture for
+We structured our code using object-oriented programming principles and task-based architecture for
 streamlined modifications and control. Each part of the robot runs as a separate task, allowing for easy 
-debugging and organization. Motor Control uses a PI controller to set motor speed based on encoder feedback. 
-The encoder uses quadrature signals and an AR reset to prevent overflow. Our IR sensor uses a centroid based 
+debugging and organization. We use a PI controller to set motor speed based on encoder feedback. 
+The encoder uses quadrature signals and an AR reset to prevent overflow. Our IR sensor uses a centroid-based 
 algorithm to track black lines for navigation.
 
 
